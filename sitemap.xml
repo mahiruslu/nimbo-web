@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://nimbo.mahiruslu.com/</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/en</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/gizlilik</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/privacy</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/kullanim-kosullari</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/terms</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/destek</loc></url>
-  <url><loc>https://nimbo.mahiruslu.com/support</loc></url>
+  <url><loc>https://nimboapp.vercel.app/</loc></url>
+  <url><loc>https://nimboapp.vercel.app/en</loc></url>
+  <url><loc>https://nimboapp.vercel.app/gizlilik</loc></url>
+  <url><loc>https://nimboapp.vercel.app/privacy</loc></url>
+  <url><loc>https://nimboapp.vercel.app/kullanim-kosullari</loc></url>
+  <url><loc>https://nimboapp.vercel.app/terms</loc></url>
+  <url><loc>https://nimboapp.vercel.app/destek</loc></url>
+  <url><loc>https://nimboapp.vercel.app/support</loc></url>
 </urlset>

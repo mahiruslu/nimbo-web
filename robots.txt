@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nimbo.mahiruslu.com/sitemap.xml
+Sitemap: https://nimboapp.vercel.app/sitemap.xml

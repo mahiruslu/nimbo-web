@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Generates every page of nimbo.mahiruslu.com from one template.
+Generates every page of the Nimbo site from one template.
 
 The site is committed as plain HTML so Vercel needs no build step; this script
 is the authoring tool. Run it after editing CONTENT, then commit the output.
@@ -14,8 +14,9 @@ import os
 
 OWNER = "Mahir Uslu"
 EMAIL = "nimbo@mahiruslu.com"
-ORIGIN = "https://nimbo.mahiruslu.com"
+ORIGIN = "https://nimboapp.vercel.app"
 UPDATED = {"tr": "27 Ağustos 2026", "en": "27 August 2026"}
+HOST = ORIGIN.split("://", 1)[1]
 
 # path -> its counterpart in the other language
 ALT = {
@@ -577,9 +578,9 @@ cihazda oluşturulan PDF raporları bulunur.</p>
 <h2>Belgeler</h2>
 <div class="scroll"><table>
   <tr><th>Belge</th><th>Bağlantı</th></tr>
-  <tr><td>Gizlilik Politikası</td><td><a href="/gizlilik">nimbo.mahiruslu.com/gizlilik</a></td></tr>
-  <tr><td>Kullanım Koşulları</td><td><a href="/kullanim-kosullari">nimbo.mahiruslu.com/kullanim-kosullari</a></td></tr>
-  <tr><td>Destek</td><td><a href="/destek">nimbo.mahiruslu.com/destek</a></td></tr>
+  <tr><td>Gizlilik Politikası</td><td><a href="/gizlilik">{HOST}/gizlilik</a></td></tr>
+  <tr><td>Kullanım Koşulları</td><td><a href="/kullanim-kosullari">{HOST}/kullanim-kosullari</a></td></tr>
+  <tr><td>Destek</td><td><a href="/destek">{HOST}/destek</a></td></tr>
 </table></div>
 
 <p class="contact">İletişim: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
@@ -616,9 +617,9 @@ PDF reports generated on the device.</p>
 <h2>Documents</h2>
 <div class="scroll"><table>
   <tr><th>Document</th><th>Link</th></tr>
-  <tr><td>Privacy Policy</td><td><a href="/privacy">nimbo.mahiruslu.com/privacy</a></td></tr>
-  <tr><td>Terms of Use</td><td><a href="/terms">nimbo.mahiruslu.com/terms</a></td></tr>
-  <tr><td>Support</td><td><a href="/support">nimbo.mahiruslu.com/support</a></td></tr>
+  <tr><td>Privacy Policy</td><td><a href="/privacy">{HOST}/privacy</a></td></tr>
+  <tr><td>Terms of Use</td><td><a href="/terms">{HOST}/terms</a></td></tr>
+  <tr><td>Support</td><td><a href="/support">{HOST}/support</a></td></tr>
 </table></div>
 
 <p class="contact">Contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
