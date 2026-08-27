@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "maintenance": {
+    "enabled": false,
+    "message": {
+      "tr": "Nimbo kısa bir mola veriyor. Lütfen biraz sonra tekrar deneyin.",
+      "en": "Nimbo is taking a short break. Please try again in a little while."
+    }
+  },
+  "update": {
+    "ios": {
+      "minVersion": "1.0.0",
+      "latestVersion": "1.0.0",
+      "storeUrl": "https://apps.apple.com/tr/app/nimbo/id0000000000",
+      "forceMessage": {
+        "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",
+        "en": "Please update Nimbo to continue."
+      },
+      "optionalMessage": {
+        "tr": "Nimbo'nun yeni bir sürümü hazır.",
+        "en": "A new version of Nimbo is ready."
+      }
+    },
+    "android": {
+      "minVersion": "1.0.0",
+      "latestVersion": "1.0.0",
+      "storeUrl": "https://play.google.com/store/apps/details?id=com.nimbo.kids",
+      "forceMessage": {
+        "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",
+        "en": "Please update Nimbo to continue."
+      },
+      "optionalMessage": {
+        "tr": "Nimbo'nun yeni bir sürümü hazır.",
+        "en": "A new version of Nimbo is ready."
+      }
+    }
+  },
+  "features": {
+    "artStudio": true,
+    "mathHouse": true,
+    "turkishLibrary": true,
+    "attentionPark": true,
+    "robotWorkshop": true,
+    "sleepRoom": true,
+    "paywall": false
+  },
+  "monetization": {
+    "fullUnlockProductId": "nimbo_full_unlock",
+    "artPackProductId": "nimbo_pack_art_1"
+  },
+  "content": {
+    "minContentVersion": 1,
+    "enabledPacks": ["math-1", "turkish-1", "attention-1", "art-1", "robot-1", "sleep-1"]
+  }
+}

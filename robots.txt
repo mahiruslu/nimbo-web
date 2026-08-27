@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nimbo.mahiruslu.com/sitemap.xml
