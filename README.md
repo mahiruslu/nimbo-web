@@ -73,16 +73,29 @@ one.** The Play URL is already correct.
 
 Hosted on Vercel as its own project, separate from `mahiruslu.me`.
 
-1. Vercel → Add New Project → import this repository. No framework preset, no
-   build command, output directory `.`.
-2. Project → Settings → Domains → add `nimbo.mahiruslu.com`.
-3. In Google Cloud DNS (where `mahiruslu.com` is managed), add:
+The Vercel project (`nimbo-web`, team `mahiruslus-projects`) and the domain are
+already created. Only the DNS record is outstanding.
 
-   ```
-   nimbo   CNAME   cname.vercel-dns.com.
-   ```
+**In Google Cloud DNS**, where `mahiruslu.com` is managed, add one record in the
+`mahiruslu.com` zone:
 
-4. Verify:
+```
+Name:  nimbo
+Type:  CNAME
+TTL:   300
+Data:  54c585302a213047.vercel-dns-017.com.
+```
+
+That target is issued by Vercel for this specific project — prefer it over the
+generic `cname.vercel-dns.com`. If the zone will not accept a CNAME, A records
+to `216.198.79.1` and `64.29.17.1` work too, but a CNAME survives Vercel
+changing its IPs.
+
+Vercel has already verified ownership of the subdomain (the apex is in use by
+another project on the same account), so the certificate is issued as soon as
+the record resolves — usually a few minutes.
+
+Verify:
 
    ```bash
    curl -sI https://nimbo.mahiruslu.com/gizlilik | head -1
@@ -91,6 +104,11 @@ Hosted on Vercel as its own project, separate from `mahiruslu.me`.
 
 `vercel.json` sets the cache policy for the config endpoint (5 minutes) and a
 strict CSP — the site has no scripts at all, so `default-src 'none'` holds.
+
+Deployment protection is on with `all_except_custom_domains`: the `*.vercel.app`
+URLs require a Vercel login, `nimbo.mahiruslu.com` is public. Leave it that way
+— the app fetches the config anonymously and App Review has to read the privacy
+policy without an account.
 
 ## Support mailbox
 
