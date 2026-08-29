@@ -61,13 +61,15 @@ Two rules that are easy to get wrong:
   Anything else — including an empty string — fails validation for the whole
   document, not just that field.
 
-### ⚠️ Before release: the iOS store URL is a placeholder
+### The iOS store URL
 
-`update.ios.storeUrl` is `https://apps.apple.com/tr/app/nimbo/id0000000000`
-because the App Store ID does not exist yet. It validates, and it cannot be
-reached today (`minVersion` equals the shipping version, so force-update never
-fires), but **replace it with the real ID as soon as App Store Connect issues
-one.** The Play URL is already correct.
+`update.ios.storeUrl` points at the real App Store ID, `id6794716737`, issued
+when the app was submitted for review (2026-08-29). It replaced the
+`id0000000000` placeholder that shipped while the app had no ID yet.
+
+The URL returns 404 until the app is actually released — that is expected and
+harmless, because `minVersion` equals the shipping version, so the force-update
+screen that would open it never fires. The Play URL has always been correct.
 
 ## Deploying
 

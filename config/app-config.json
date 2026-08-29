@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -11,7 +11,7 @@
     "ios": {
       "minVersion": "1.0.0",
       "latestVersion": "1.0.0",
-      "storeUrl": "https://apps.apple.com/tr/app/nimbo/id0000000000",
+      "storeUrl": "https://apps.apple.com/tr/app/nimbo/id6794716737",
       "forceMessage": {
         "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",
         "en": "Please update Nimbo to continue."
