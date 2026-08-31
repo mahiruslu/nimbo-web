@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -42,7 +42,7 @@
     "attentionPark": true,
     "robotWorkshop": true,
     "sleepRoom": true,
-    "paywall": false
+    "paywall": true
   },
   "monetization": {
     "fullUnlockProductId": "nimbo_full_unlock",
