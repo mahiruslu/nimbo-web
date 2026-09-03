@@ -15,7 +15,29 @@ import os
 OWNER = "Mahir Uslu"
 EMAIL = "nimbo@mahiruslu.com"
 ORIGIN = "https://nimboapp.vercel.app"
+
+# The store addresses, in the storefront-neutral form: no locale segment and no
+# name slug, so a visitor lands in their own country's store and a rename of the
+# app cannot break the link. `vercel.json` redirects /indir and /get to these by
+# User-Agent, and must be changed with them.
+APP_STORE = "https://apps.apple.com/app/id6794716737"
+PLAY_STORE = "https://play.google.com/store/apps/details?id=com.nimbo.kids"
+
+STORES_TR = f'''<div class="stores">
+  <a class="apple" href="{APP_STORE}"><img src="/assets/badge-app-store-tr.svg" alt="App Store'dan indirin" width="151" height="40"></a>
+  <a class="play" href="{PLAY_STORE}"><img src="/assets/badge-google-play-tr.png" alt="Google Play'den alın" width="646" height="250"></a>
+</div>'''
+
+STORES_EN = f'''<div class="stores">
+  <a class="apple" href="{APP_STORE}"><img src="/assets/badge-app-store-en.svg" alt="Download on the App Store" width="120" height="40"></a>
+  <a class="play" href="{PLAY_STORE}"><img src="/assets/badge-google-play-en.png" alt="Get it on Google Play" width="646" height="250"></a>
+</div>'''
+# Each document carries its own date and version. They used to share one
+# constant, which meant editing the privacy policy silently restamped the terms
+# as if they had been reissued too.
 UPDATED = {"tr": "27 Ağustos 2026", "en": "27 August 2026"}
+PRIVACY_UPDATED = {"tr": "3 Eylül 2026", "en": "3 September 2026"}
+PRIVACY_VERSION = "1.1"
 HOST = ORIGIN.split("://", 1)[1]
 
 # path -> its counterpart in the other language
@@ -24,10 +46,11 @@ ALT = {
     "/gizlilik": "/privacy", "/privacy": "/gizlilik",
     "/kullanim-kosullari": "/terms", "/terms": "/kullanim-kosullari",
     "/destek": "/support", "/support": "/destek",
+    "/indir": "/get", "/get": "/indir",
 }
 FOOTER = {
-    "tr": [("/gizlilik", "Gizlilik"), ("/kullanim-kosullari", "Koşullar"), ("/destek", "Destek")],
-    "en": [("/privacy", "Privacy"), ("/terms", "Terms"), ("/support", "Support")],
+    "tr": [("/indir", "İndir"), ("/gizlilik", "Gizlilik"), ("/kullanim-kosullari", "Koşullar"), ("/destek", "Destek")],
+    "en": [("/get", "Download"), ("/privacy", "Privacy"), ("/terms", "Terms"), ("/support", "Support")],
 }
 
 
@@ -93,7 +116,7 @@ def write(path, html):
 
 PRIVACY_TR = f'''<h1>Gizlilik Politikası</h1>
 <p class="lede">Nimbo hiçbir veri toplamaz. Bu sayfa neyin toplanmadığını tek tek sayar.</p>
-<p class="updated">Son güncelleme: {UPDATED["tr"]} · Sürüm 1.0</p>
+<p class="updated">Son güncelleme: {PRIVACY_UPDATED["tr"]} · Sürüm {PRIVACY_VERSION}</p>
 
 <div class="card">
   <h2>Kısaca</h2>
@@ -182,10 +205,12 @@ Uygulamadan dışarı açılan her bağlantı bir yetişkin doğrulamasının ar
 <h2>6. İzinler</h2>
 <div class="scroll"><table>
   <tr><th>İzin</th><th>Neden</th></tr>
-  <tr><td>Face ID / Touch ID / parmak izi</td><td>Ebeveyn alanını ve satın alma seçeneklerini korumak. Doğrulamayı işletim sistemi yapar; Nimbo biyometrik veriyi görmez.</td></tr>
   <tr><td>Ses ayarlarını değiştirme (Android)</td><td>Oyun sesleri ve uyku sesleri için ses yönlendirmesi.</td></tr>
 </table></div>
-<p>Kamera, mikrofon, konum, kişiler, fotoğraflar ve bildirim izinleri <strong>istenmez</strong>.</p>
+<p>Kamera, mikrofon, konum, kişiler, fotoğraflar ve bildirim izinleri
+<strong>istenmez</strong>. Ebeveyn alanının önündeki doğrulama da hiçbir izin gerektirmez: Nimbo
+parmak izi, yüz tanıma veya cihaz parolası istemez; uygulama içinde sorulan bir çarpma sorusu
+kullanır.</p>
 
 <h2>7. Verilerin silinmesi</h2>
 <p>Sunucularımızda size ait hiçbir veri bulunmadığı için silinmesi gereken bir kayıt yoktur.
@@ -206,7 +231,7 @@ davranışını değiştiren bir güncelleme yapılırsa, değişiklik uygulama 
 
 PRIVACY_EN = f'''<h1>Privacy Policy</h1>
 <p class="lede">Nimbo collects no data. This page lists, item by item, what is not collected.</p>
-<p class="updated">Last updated: {UPDATED["en"]} · Version 1.0</p>
+<p class="updated">Last updated: {PRIVACY_UPDATED["en"]} · Version {PRIVACY_VERSION}</p>
 
 <div class="card">
   <h2>In short</h2>
@@ -294,11 +319,12 @@ adult verification step.</p>
 <h2>6. Permissions</h2>
 <div class="scroll"><table>
   <tr><th>Permission</th><th>Why</th></tr>
-  <tr><td>Face ID / Touch ID / fingerprint</td><td>To protect the parent area and purchase options. Verification is handled by the operating system; Nimbo never sees biometric data.</td></tr>
   <tr><td>Modify audio settings (Android)</td><td>Audio routing for game sounds and sleep sounds.</td></tr>
 </table></div>
 <p>Camera, microphone, location, contacts, photos and notification permissions are
-<strong>never requested</strong>.</p>
+<strong>never requested</strong>. The check in front of the parent area needs no permission either:
+Nimbo never asks for a fingerprint, a face scan or a device passcode — it asks a multiplication
+question inside the app.</p>
 
 <h2>7. Deleting data</h2>
 <p>Because we hold no data about you on any server, there is no record to delete. To remove the data
@@ -445,9 +471,9 @@ SUPPORT_TR = f'''<h1>Destek</h1>
 <h2>Sık sorulanlar</h2>
 
 <h3>Ebeveyn alanına nasıl girerim?</h3>
-<p>Çocuk ana ekranındaki ayarlar düğmesine dokunun. Cihazınızın Face ID, Touch ID, parmak izi veya
-ekran kilidi parolasıyla doğrulama istenir. Cihazınızda ekran kilidi tanımlı değilse yerine bir
-yetişkin sorusu (çarpma işlemi) sorulur.</p>
+<p>Çocuk ana ekranındaki ayarlar düğmesine dokunun. Kelimelerle yazılmış bir çarpma sorusu sorulur
+—&nbsp;“sekiz çarpı dokuz” gibi&nbsp;— ve altı sayıdan doğru olanına dokunarak yanıtlarsınız. Yanlış
+dokunursanız yeni bir soru gelir. Nimbo parmak izi, yüz tanıma veya cihaz parolası istemez.</p>
 
 <h3>Hangi bölümler ücretsiz?</h3>
 <p>203 etkinliğin 97'si ücretsizdir. Sanat Atölyesi'nin tamamı (52 etkinlik) ücretsizdir; Matematik,
@@ -496,9 +522,10 @@ SUPPORT_EN = f'''<h1>Support</h1>
 <h2>Frequently asked</h2>
 
 <h3>How do I open the parent area?</h3>
-<p>Tap the settings button on the child home screen. You will be asked to verify with your device's
-Face ID, Touch ID, fingerprint or screen-lock passcode. If your device has no screen lock, an adult
-question (a multiplication) is asked instead.</p>
+<p>Tap the settings button on the child home screen. A multiplication question spelled out in words
+—&nbsp;“eight times nine”&nbsp;— is asked, and you answer by tapping the right one of six numbers. A
+wrong tap brings up a new question. Nimbo never asks for a fingerprint, a face scan or a device
+passcode.</p>
 
 <h3>Which parts are free?</h3>
 <p>97 of the 203 activities are free. The whole Art Studio (52 activities) is free; the numeracy,
@@ -551,6 +578,8 @@ LANDING_TR = f'''<div class="hero">
   <div><h1>Nimbo</h1><p class="lede">3–6 yaş için reklamsız, takipsiz bir öğrenme dünyası.</p></div>
 </div>
 
+{STORES_TR}
+
 <p>Nimbo; matematik, Türkçe, dikkat, sanat, robotik ve uyku rutini olmak üzere altı bölümde
 <strong>203 etkinlik</strong> sunar. Tamamı Türkçe ve İngilizce seslendirilmiştir ve internet
 bağlantısı olmadan çalışır.</p>
@@ -568,10 +597,9 @@ bağlantısı olmadan çalışır.</p>
 </div>
 
 <h2>Ebeveyn alanı</h2>
-<p>Ebeveyn alanı, satın alma seçenekleri ve gizlilik ekranı cihazın kendi kilidiyle (Face ID,
-Touch ID, parmak izi veya ekran kilidi parolası) korunur. Doğrulamayı işletim sistemi yapar; Nimbo
-biyometrik verinizi veya cihaz parolanızı görmez ve saklamaz. Cihazda ekran kilidi tanımlı değilse
-yerine bir yetişkin sorusu sorulur.</p>
+<p>Ebeveyn alanı, satın alma seçenekleri ve gizlilik ekranı bir ebeveyn sorusuyla korunur:
+kelimelerle yazılmış bir çarpma sorusu, altı sayıdan birine dokunarak yanıtlanır. Küçük bir çocuk
+geçemez; Nimbo sizden parola, parmak izi veya yüz doğrulaması istemez.</p>
 <p>Ebeveyn alanında ekran süresi limiti, bölüm bazlı içerik kontrolü, ilerleme istatistikleri ve
 cihazda oluşturulan PDF raporları bulunur.</p>
 
@@ -590,6 +618,8 @@ LANDING_EN = f'''<div class="hero">
   <div><h1>Nimbo</h1><p class="lede">An ad-free, tracking-free learning world for ages 3–6.</p></div>
 </div>
 
+{STORES_EN}
+
 <p>Nimbo offers <strong>203 activities</strong> across six areas: numeracy, language, attention, art,
 robotics and a bedtime routine. Every activity is voiced in both Turkish and English, and the whole
 app works without an internet connection.</p>
@@ -607,10 +637,9 @@ app works without an internet connection.</p>
 </div>
 
 <h2>Parent area</h2>
-<p>The parent area, purchase options and privacy screen are protected by the device's own lock
-(Face ID, Touch ID, fingerprint or screen-lock passcode). Verification is handled by the operating
-system; Nimbo never sees or stores your biometric data or device passcode. If the device has no
-screen lock, an adult question is asked instead.</p>
+<p>The parent area, purchase options and privacy screen sit behind a parent gate: a multiplication
+question written out in words, answered by tapping one of six numbers. A young child cannot pass it,
+and Nimbo never asks for a password, a fingerprint or your face.</p>
 <p>The parent area holds a screen-time limit, per-module content controls, progress statistics and
 PDF reports generated on the device.</p>
 
@@ -621,6 +650,70 @@ PDF reports generated on the device.</p>
   <tr><td>Terms of Use</td><td><a href="/terms">{HOST}/terms</a></td></tr>
   <tr><td>Support</td><td><a href="/support">{HOST}/support</a></td></tr>
 </table></div>
+
+<p class="contact">Contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
+
+
+# ---------------------------------------------------------------------------
+# Download
+# ---------------------------------------------------------------------------
+
+# Both badges are the official artwork, unmodified: Apple's SVG from
+# developer.apple.com and Google's PNG from the Play badge endpoint. They are
+# trademarks with written size and clear-space rules, so they are served from
+# /assets rather than redrawn — and they have to be self-hosted anyway, because
+# the site's Content-Security-Policy allows img-src 'self' only.
+DOWNLOAD_TR = f'''<div class="hero">
+  <img src="/assets/icon.svg" alt="Nimbo uygulama simgesi" width="88" height="88">
+  <div><h1>Nimbo Dünyası'nı indirin</h1><p class="lede">3–6 yaş için reklamsız, takipsiz bir keşif dünyası.</p></div>
+</div>
+
+{STORES_TR}
+
+<p>Bulutların üstünde bir ada var. Haritada altı yer duruyor: Matematik Evi, Türkçe Kitaplığı,
+Dikkat Parkı, Sanat Atölyesi, Robot Atölyesi ve Uyku Odası. Her yönerge ve her masal sayfası
+Türkçe ve İngilizce seslendirilmiştir; henüz okuyamayan bir çocuk da tek başına gezebilir.</p>
+
+<div class="card">
+  <h2>Nimbo'nun sözü</h2>
+  <ul class="promise">
+    <li><span class="tick">✓</span><div><strong>Reklam yok</strong><span class="sub">Reklam ağı, sponsorlu içerik veya çocuğu satın almaya yönelten reklam alanı bulunmaz.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Takip yok</strong><span class="sub">Analitik profili, davranışsal izleme, üçüncü taraf takip pikseli veya reklam kimliği kullanılmaz.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Veriler cihazda</strong><span class="sub">İlerleme, ekran süresi, çizimler, ayarlar ve ebeveyn raporları yalnızca cihazda tutulur.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>İnternet gerekmez</strong><span class="sub">Etkinliklerin tamamı çevrimdışı çalışır.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">Etkinliklerin yaklaşık yarısı ücretsizdir; tam erişim tek seferlik bir satın almadır.</span></div></li>
+  </ul>
+</div>
+
+<p>Uygulamayı denedikten sonra takıldığınız bir yer olursa <a href="/destek">destek sayfası</a>
+sık sorulan soruları yanıtlıyor.</p>
+
+<p class="contact">İletişim: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
+
+DOWNLOAD_EN = f'''<div class="hero">
+  <img src="/assets/icon.svg" alt="Nimbo app icon" width="88" height="88">
+  <div><h1>Get Nimbo World</h1><p class="lede">An ad-free, tracking-free world of discovery for ages 3–6.</p></div>
+</div>
+
+{STORES_EN}
+
+<p>There is an island above the clouds. Six places sit on its map: Math House, Language Library,
+Focus Park, Art Studio, Robot Workshop and the Sleep Room. Every instruction and every story page
+is voiced in both English and Turkish, so a child who cannot read yet can explore alone.</p>
+
+<div class="card">
+  <h2>Nimbo's promise</h2>
+  <ul class="promise">
+    <li><span class="tick">✓</span><div><strong>No ads</strong><span class="sub">No ad network, no sponsored content, no ad slot pushing a child towards a purchase.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No tracking</strong><span class="sub">No analytics profile, no behavioural tracking, no third-party pixel, no advertising identifier.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Data stays on the device</strong><span class="sub">Progress, screen time, drawings, settings and parent reports never leave it.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No internet needed</strong><span class="sub">Every activity works offline.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">About half the activities are free; full access is a one-time purchase.</span></div></li>
+  </ul>
+</div>
+
+<p>If something does not work the way you expected, the <a href="/support">support page</a>
+answers the common questions.</p>
 
 <p class="contact">Contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
 
@@ -642,6 +735,10 @@ PAGES = [
      "Nimbo destek ve sık sorulan sorular: ebeveyn alanı, satın alma geri yükleme, ekran süresi, dil.", SUPPORT_TR),
     ("/support", "en", "Support — Nimbo",
      "Nimbo support and FAQ: parent area, restoring purchases, screen time, language.", SUPPORT_EN),
+    ("/indir", "tr", "Nimbo Dünyası'nı indirin — App Store ve Google Play",
+     "Nimbo Dünyası'nı App Store veya Google Play'den indirin. 3–6 yaş için reklamsız, takipsiz, çevrimdışı çalışan bir öğrenme dünyası.", DOWNLOAD_TR),
+    ("/get", "en", "Get Nimbo World — App Store and Google Play",
+     "Download Nimbo World from the App Store or Google Play. An ad-free, tracking-free, offline learning world for ages 3–6.", DOWNLOAD_EN),
 ]
 
 

@@ -102,3 +102,15 @@ footer.site .bar { padding: 24px 22px; }
 footer.site a { color: var(--brand-deep); margin-right: 16px; }
 .hero { display: flex; gap: 22px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
 .hero img { width: 88px; height: 88px; border-radius: 22px; }
+
+/* Store badges.
+   Apple ships its badge with no padding; Google bakes clear space equal to an
+   eighth of the badge height into every side of the PNG. Sized to the same box
+   the Play badge therefore looks smaller, so it is rendered a quarter taller
+   and its built-in padding is pulled back out with a negative margin. */
+.stores { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin: 26px 0 30px; }
+.stores a { display: inline-flex; border-radius: 8px; }
+.stores a:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.stores img { display: block; width: auto; }
+.stores .apple img { height: 52px; }
+.stores .play img { height: 65px; margin: -6px -7px; }
