@@ -1,5 +1,5 @@
 {
-  "version": 7,
+  "version": 8,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -9,7 +9,7 @@
   },
   "update": {
     "ios": {
-      "minVersion": "1.0.0",
+      "minVersion": "1.7.0",
       "latestVersion": "1.7.0",
       "storeUrl": "https://apps.apple.com/tr/app/nimbo/id6794716737",
       "forceMessage": {
@@ -22,7 +22,7 @@
       }
     },
     "android": {
-      "minVersion": "1.0.0",
+      "minVersion": "1.7.0",
       "latestVersion": "1.7.0",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.nimbo.kids",
       "forceMessage": {
