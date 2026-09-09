@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 7,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -10,7 +10,7 @@
   "update": {
     "ios": {
       "minVersion": "1.0.0",
-      "latestVersion": "1.0.0",
+      "latestVersion": "1.7.0",
       "storeUrl": "https://apps.apple.com/tr/app/nimbo/id6794716737",
       "forceMessage": {
         "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",
@@ -23,7 +23,7 @@
     },
     "android": {
       "minVersion": "1.0.0",
-      "latestVersion": "1.0.0",
+      "latestVersion": "1.7.0",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.nimbo.kids",
       "forceMessage": {
         "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",

@@ -27,8 +27,8 @@
 </div></header>
 <main id="main">
 <h1>Gizlilik Politikası</h1>
-<p class="lede">Nimbo hiçbir veri toplamaz. Bu sayfa neyin toplanmadığını tek tek sayar.</p>
-<p class="updated">Son güncelleme: 3 Eylül 2026 · Sürüm 1.1</p>
+<p class="lede">Nimbo Dünyası hiçbir veri toplamaz. Bu sayfa neyin toplanmadığını tek tek sayar.</p>
+<p class="updated">Son güncelleme: 9 Eylül 2026 · Sürüm 1.2</p>
 
 <div class="card">
   <h2>Kısaca</h2>
@@ -37,6 +37,7 @@
     <li>Hesap, oturum açma veya e-posta adresi gerekmez.</li>
     <li>Reklam ağı, analitik aracı ve çökme raporlama servisi <strong>yoktur</strong>.</li>
     <li>Uygulamanın oluşturduğu her şey <strong>yalnızca cihazda</strong> kalır.</li>
+    <li>Hatırlatmalar kapalı gelir, cihazda kurulur ve uzaktan bildirim yoktur.</li>
     <li>Uygulamayı silmek, ürettiği tüm veriyi siler.</li>
   </ul>
 </div>
@@ -61,9 +62,11 @@ tarafımızca erişilemez:</p>
 <div class="scroll"><table>
   <tr><th>Veri</th><th>Amaç</th></tr>
   <tr><td>Tamamlanan etkinlikler, kazanılan çıkartma ve rozetler</td><td>İlerlemeyi göstermek</td></tr>
+  <tr><td>Yıldızlar, gün serisi, koleksiyon ve seçilen avatar</td><td>Ada dünyası ve mağazası</td></tr>
   <tr><td>Ekran süresi kayıtları ve günlük limit</td><td>Ebeveyn kontrolleri</td></tr>
   <tr><td>Çizimler ve boyama sayfaları</td><td>Sanat galerisi</td></tr>
   <tr><td>Ses, dil, erişilebilirlik ve uyku ayarları</td><td>Tercihleri hatırlamak</td></tr>
+  <tr><td>Hatırlatma tercihleri ve saatleri</td><td>Cihazda kurulan hatırlatmalar</td></tr>
   <tr><td>Seçilen yaş aralığı</td><td>İçerik zorluğunu ayarlamak</td></tr>
   <tr><td>Satın alma durumu</td><td>Tam erişimi açık tutmak</td></tr>
 </table></div>
@@ -81,6 +84,9 @@ adı yer almaz, çünkü Nimbo çocuğun adını hiç bilmez.</p>
 <p>Bu istek bir bakım duyurusunu veya zorunlu güncelleme bilgisini iletmek içindir. İstek
 başarısız olursa uygulama önbellekteki veya uygulamayla birlikte gelen yapılandırmayı kullanır ve
 normal şekilde çalışmaya devam eder.</p>
+<p>Ebeveyn Alanı'ndan açılabilen hatırlatmalar da ağ kullanmaz: seçtiğiniz saat cihazın kendi
+zamanlayıcısına kurulur. Nimbo bir <strong>bildirim jetonu (push token) kaydetmez</strong> ve
+hiçbir bildirim sunucusuyla konuşmaz; uygulama uzaktan adreslenebilir değildir.</p>
 
 <h2>4. Üçüncü taraf hizmetler</h2>
 <p>Nimbo'da <strong>tek bir</strong> üçüncü taraf bileşen vardır:</p>
@@ -98,6 +104,8 @@ makbuzunun doğrulanması için RevenueCat, Inc. hizmeti kullanılır. Bu kapsam
 bilgileriniz mağazada kalır; Nimbo kart bilgisi görmez.</p>
 <p>Uygulamada reklam ağı, analitik aracı (Google Analytics, Firebase Analytics vb.), çökme
 raporlama servisi veya sosyal medya SDK'sı <strong>bulunmaz</strong>.</p>
+<p>Uygulama zaman zaman mağazanın kendi puanlama penceresini açabilir. Bu pencere işletim
+sisteminin bir parçasıdır; Nimbo puanınızı, yorumunuzu veya pencereyi görüp görmediğinizi öğrenmez.</p>
 
 <h2>5. Çocuk gizliliği</h2>
 <p>Nimbo çocuklara yönelik olarak tasarlanmıştır ve çocuklardan kişisel veri toplamaz.</p>
@@ -118,25 +126,42 @@ Uygulamadan dışarı açılan her bağlantı bir yetişkin doğrulamasının ar
 <div class="scroll"><table>
   <tr><th>İzin</th><th>Neden</th></tr>
   <tr><td>Ses ayarlarını değiştirme (Android)</td><td>Oyun sesleri ve uyku sesleri için ses yönlendirmesi.</td></tr>
+  <tr><td>Bildirimler (iOS ve Android)</td><td>Yalnızca bir ebeveyn hatırlatmaları açtığında istenir. Hatırlatmalar cihazda kurulur; uzaktan bildirim gönderilmez.</td></tr>
+  <tr><td>Dosya seçici</td><td>Yalnızca yedekten geri yüklerken açılır ve yalnızca sizin seçtiğiniz dosyayı okur.</td></tr>
 </table></div>
-<p>Kamera, mikrofon, konum, kişiler, fotoğraflar ve bildirim izinleri
-<strong>istenmez</strong>. Ebeveyn alanının önündeki doğrulama da hiçbir izin gerektirmez: Nimbo
-parmak izi, yüz tanıma veya cihaz parolası istemez; uygulama içinde sorulan bir çarpma sorusu
-kullanır.</p>
+<p>Kamera, mikrofon, konum, kişiler ve fotoğraflar izinleri <strong>istenmez</strong>. Bildirim izni
+uygulama açılışında değil, yalnızca ebeveyn bir hatırlatmayı açtığı anda sorulur; hatırlatmaların
+tamamı kapalı gelir ve hiçbiri satın almaya yönlendirmez. Ebeveyn alanının önündeki doğrulama da
+hiçbir izin gerektirmez: Nimbo parmak izi, yüz tanıma veya cihaz parolası istemez; uygulama içinde
+sorulan bir çarpma sorusu kullanır.</p>
 
-<h2>7. Verilerin silinmesi</h2>
+<h2>7. Yedekleme dosyaları</h2>
+<p>Nimbo'nun hesabı ve bulut eşitlemesi olmadığı için, kaybolan bir telefon bütün ilerlemeyi de
+götürür. Ebeveyn Alanı → Yedekleme bölümü bunun karşılığıdır: ilerleme, yıldızlar, çizimler ve
+ayarlar tek bir JSON dosyasına yazılır ve cihazın paylaşım penceresi açılır.</p>
+<ul>
+  <li>Dosya <strong>sizin elinizde</strong>dir. Nimbo onu hiçbir sunucuya yüklemez, bir kopyasını
+  saklamaz ve nereye kaydettiğinizi bilmez.</li>
+  <li>Geri yüklerken yalnızca sizin seçtiğiniz dosya okunur ve yalnızca tanınan kayıtlar yazılır.</li>
+  <li>Satın almalar yedeğe <strong>dahil değildir</strong>; onlar mağaza hesabınıza bağlıdır ve
+  “Satın Alımları Geri Yükle” ile geri gelir.</li>
+  <li>Dosyada çocuğun adı yer almaz, çünkü Nimbo çocuğun adını hiç bilmez.</li>
+</ul>
+
+<h2>8. Verilerin silinmesi</h2>
 <p>Sunucularımızda size ait hiçbir veri bulunmadığı için silinmesi gereken bir kayıt yoktur.
 Cihazdaki verileri silmek için uygulamayı kaldırmanız yeterlidir; ilerleme, çizimler, ayarlar ve
-raporlar cihazla birlikte gider.</p>
+raporlar cihazla birlikte gider. Daha önce dışa aktardığınız bir yedek dosyası veya PDF raporu
+kaydettiğiniz yerde kalır; onları silmek size aittir.</p>
 <p>Satın alma kaydı mağaza hesabınıza bağlıdır. Uygulamayı silip yeniden kurduğunuzda Ebeveyn
 Alanı → Satın Alımlar bölümünden <strong>Satın Alımları Geri Yükle</strong> ile tam erişimi geri
 kazanabilirsiniz.</p>
 
-<h2>8. Bu politikadaki değişiklikler</h2>
+<h2>9. Bu politikadaki değişiklikler</h2>
 <p>Politika değişirse bu sayfadaki tarih ve sürüm numarası güncellenir. Uygulamanın veri
 davranışını değiştiren bir güncelleme yapılırsa, değişiklik uygulama sürüm notlarında da belirtilir.</p>
 
-<h2>9. İletişim</h2>
+<h2>10. İletişim</h2>
 <p>Veri sorumlusu: <strong>Mahir Uslu</strong> (Türkiye)</p>
 <p class="contact"><a href="mailto:nimbo@mahiruslu.com">nimbo@mahiruslu.com</a></p>
 <p>Gizlilikle ilgili sorularınıza en geç 30 gün içinde yanıt verilir.</p>

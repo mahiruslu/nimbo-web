@@ -32,12 +32,24 @@ STORES_EN = f'''<div class="stores">
   <a class="apple" href="{APP_STORE}"><img src="/assets/badge-app-store-en.svg" alt="Download on the App Store" width="120" height="40"></a>
   <a class="play" href="{PLAY_STORE}"><img src="/assets/badge-google-play-en.png" alt="Get it on Google Play" width="646" height="250"></a>
 </div>'''
+# The shipping app version this site describes. The pages promise things about
+# a build a visitor can actually download, so this moves with the release, not
+# with the repo: bump it when the store listing goes live, together with
+# `latestVersion` in config/app-config.json.
+APP_VERSION = "1.7.0"
+
+# Activity counts, straight from the content packs (see README). One place, so
+# the landing, download and support pages cannot drift apart.
+ACTIVITIES = 502
+FREE_ACTIVITIES = 164
+
 # Each document carries its own date and version. They used to share one
 # constant, which meant editing the privacy policy silently restamped the terms
 # as if they had been reissued too.
-UPDATED = {"tr": "27 Ağustos 2026", "en": "27 August 2026"}
-PRIVACY_UPDATED = {"tr": "3 Eylül 2026", "en": "3 September 2026"}
-PRIVACY_VERSION = "1.1"
+UPDATED = {"tr": "9 Eylül 2026", "en": "9 September 2026"}
+TERMS_VERSION = "1.1"
+PRIVACY_UPDATED = {"tr": "9 Eylül 2026", "en": "9 September 2026"}
+PRIVACY_VERSION = "1.2"
 HOST = ORIGIN.split("://", 1)[1]
 
 # path -> its counterpart in the other language
@@ -115,7 +127,7 @@ def write(path, html):
 # ---------------------------------------------------------------------------
 
 PRIVACY_TR = f'''<h1>Gizlilik Politikası</h1>
-<p class="lede">Nimbo hiçbir veri toplamaz. Bu sayfa neyin toplanmadığını tek tek sayar.</p>
+<p class="lede">Nimbo Dünyası hiçbir veri toplamaz. Bu sayfa neyin toplanmadığını tek tek sayar.</p>
 <p class="updated">Son güncelleme: {PRIVACY_UPDATED["tr"]} · Sürüm {PRIVACY_VERSION}</p>
 
 <div class="card">
@@ -125,6 +137,7 @@ PRIVACY_TR = f'''<h1>Gizlilik Politikası</h1>
     <li>Hesap, oturum açma veya e-posta adresi gerekmez.</li>
     <li>Reklam ağı, analitik aracı ve çökme raporlama servisi <strong>yoktur</strong>.</li>
     <li>Uygulamanın oluşturduğu her şey <strong>yalnızca cihazda</strong> kalır.</li>
+    <li>Hatırlatmalar kapalı gelir, cihazda kurulur ve uzaktan bildirim yoktur.</li>
     <li>Uygulamayı silmek, ürettiği tüm veriyi siler.</li>
   </ul>
 </div>
@@ -149,9 +162,11 @@ tarafımızca erişilemez:</p>
 <div class="scroll"><table>
   <tr><th>Veri</th><th>Amaç</th></tr>
   <tr><td>Tamamlanan etkinlikler, kazanılan çıkartma ve rozetler</td><td>İlerlemeyi göstermek</td></tr>
+  <tr><td>Yıldızlar, gün serisi, koleksiyon ve seçilen avatar</td><td>Ada dünyası ve mağazası</td></tr>
   <tr><td>Ekran süresi kayıtları ve günlük limit</td><td>Ebeveyn kontrolleri</td></tr>
   <tr><td>Çizimler ve boyama sayfaları</td><td>Sanat galerisi</td></tr>
   <tr><td>Ses, dil, erişilebilirlik ve uyku ayarları</td><td>Tercihleri hatırlamak</td></tr>
+  <tr><td>Hatırlatma tercihleri ve saatleri</td><td>Cihazda kurulan hatırlatmalar</td></tr>
   <tr><td>Seçilen yaş aralığı</td><td>İçerik zorluğunu ayarlamak</td></tr>
   <tr><td>Satın alma durumu</td><td>Tam erişimi açık tutmak</td></tr>
 </table></div>
@@ -169,6 +184,9 @@ adı yer almaz, çünkü Nimbo çocuğun adını hiç bilmez.</p>
 <p>Bu istek bir bakım duyurusunu veya zorunlu güncelleme bilgisini iletmek içindir. İstek
 başarısız olursa uygulama önbellekteki veya uygulamayla birlikte gelen yapılandırmayı kullanır ve
 normal şekilde çalışmaya devam eder.</p>
+<p>Ebeveyn Alanı'ndan açılabilen hatırlatmalar da ağ kullanmaz: seçtiğiniz saat cihazın kendi
+zamanlayıcısına kurulur. Nimbo bir <strong>bildirim jetonu (push token) kaydetmez</strong> ve
+hiçbir bildirim sunucusuyla konuşmaz; uygulama uzaktan adreslenebilir değildir.</p>
 
 <h2>4. Üçüncü taraf hizmetler</h2>
 <p>Nimbo'da <strong>tek bir</strong> üçüncü taraf bileşen vardır:</p>
@@ -186,6 +204,8 @@ makbuzunun doğrulanması için RevenueCat, Inc. hizmeti kullanılır. Bu kapsam
 bilgileriniz mağazada kalır; Nimbo kart bilgisi görmez.</p>
 <p>Uygulamada reklam ağı, analitik aracı (Google Analytics, Firebase Analytics vb.), çökme
 raporlama servisi veya sosyal medya SDK'sı <strong>bulunmaz</strong>.</p>
+<p>Uygulama zaman zaman mağazanın kendi puanlama penceresini açabilir. Bu pencere işletim
+sisteminin bir parçasıdır; Nimbo puanınızı, yorumunuzu veya pencereyi görüp görmediğinizi öğrenmez.</p>
 
 <h2>5. Çocuk gizliliği</h2>
 <p>Nimbo çocuklara yönelik olarak tasarlanmıştır ve çocuklardan kişisel veri toplamaz.</p>
@@ -206,31 +226,48 @@ Uygulamadan dışarı açılan her bağlantı bir yetişkin doğrulamasının ar
 <div class="scroll"><table>
   <tr><th>İzin</th><th>Neden</th></tr>
   <tr><td>Ses ayarlarını değiştirme (Android)</td><td>Oyun sesleri ve uyku sesleri için ses yönlendirmesi.</td></tr>
+  <tr><td>Bildirimler (iOS ve Android)</td><td>Yalnızca bir ebeveyn hatırlatmaları açtığında istenir. Hatırlatmalar cihazda kurulur; uzaktan bildirim gönderilmez.</td></tr>
+  <tr><td>Dosya seçici</td><td>Yalnızca yedekten geri yüklerken açılır ve yalnızca sizin seçtiğiniz dosyayı okur.</td></tr>
 </table></div>
-<p>Kamera, mikrofon, konum, kişiler, fotoğraflar ve bildirim izinleri
-<strong>istenmez</strong>. Ebeveyn alanının önündeki doğrulama da hiçbir izin gerektirmez: Nimbo
-parmak izi, yüz tanıma veya cihaz parolası istemez; uygulama içinde sorulan bir çarpma sorusu
-kullanır.</p>
+<p>Kamera, mikrofon, konum, kişiler ve fotoğraflar izinleri <strong>istenmez</strong>. Bildirim izni
+uygulama açılışında değil, yalnızca ebeveyn bir hatırlatmayı açtığı anda sorulur; hatırlatmaların
+tamamı kapalı gelir ve hiçbiri satın almaya yönlendirmez. Ebeveyn alanının önündeki doğrulama da
+hiçbir izin gerektirmez: Nimbo parmak izi, yüz tanıma veya cihaz parolası istemez; uygulama içinde
+sorulan bir çarpma sorusu kullanır.</p>
 
-<h2>7. Verilerin silinmesi</h2>
+<h2>7. Yedekleme dosyaları</h2>
+<p>Nimbo'nun hesabı ve bulut eşitlemesi olmadığı için, kaybolan bir telefon bütün ilerlemeyi de
+götürür. Ebeveyn Alanı → Yedekleme bölümü bunun karşılığıdır: ilerleme, yıldızlar, çizimler ve
+ayarlar tek bir JSON dosyasına yazılır ve cihazın paylaşım penceresi açılır.</p>
+<ul>
+  <li>Dosya <strong>sizin elinizde</strong>dir. Nimbo onu hiçbir sunucuya yüklemez, bir kopyasını
+  saklamaz ve nereye kaydettiğinizi bilmez.</li>
+  <li>Geri yüklerken yalnızca sizin seçtiğiniz dosya okunur ve yalnızca tanınan kayıtlar yazılır.</li>
+  <li>Satın almalar yedeğe <strong>dahil değildir</strong>; onlar mağaza hesabınıza bağlıdır ve
+  “Satın Alımları Geri Yükle” ile geri gelir.</li>
+  <li>Dosyada çocuğun adı yer almaz, çünkü Nimbo çocuğun adını hiç bilmez.</li>
+</ul>
+
+<h2>8. Verilerin silinmesi</h2>
 <p>Sunucularımızda size ait hiçbir veri bulunmadığı için silinmesi gereken bir kayıt yoktur.
 Cihazdaki verileri silmek için uygulamayı kaldırmanız yeterlidir; ilerleme, çizimler, ayarlar ve
-raporlar cihazla birlikte gider.</p>
+raporlar cihazla birlikte gider. Daha önce dışa aktardığınız bir yedek dosyası veya PDF raporu
+kaydettiğiniz yerde kalır; onları silmek size aittir.</p>
 <p>Satın alma kaydı mağaza hesabınıza bağlıdır. Uygulamayı silip yeniden kurduğunuzda Ebeveyn
 Alanı → Satın Alımlar bölümünden <strong>Satın Alımları Geri Yükle</strong> ile tam erişimi geri
 kazanabilirsiniz.</p>
 
-<h2>8. Bu politikadaki değişiklikler</h2>
+<h2>9. Bu politikadaki değişiklikler</h2>
 <p>Politika değişirse bu sayfadaki tarih ve sürüm numarası güncellenir. Uygulamanın veri
 davranışını değiştiren bir güncelleme yapılırsa, değişiklik uygulama sürüm notlarında da belirtilir.</p>
 
-<h2>9. İletişim</h2>
+<h2>10. İletişim</h2>
 <p>Veri sorumlusu: <strong>{OWNER}</strong> (Türkiye)</p>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p>Gizlilikle ilgili sorularınıza en geç 30 gün içinde yanıt verilir.</p>'''
 
 PRIVACY_EN = f'''<h1>Privacy Policy</h1>
-<p class="lede">Nimbo collects no data. This page lists, item by item, what is not collected.</p>
+<p class="lede">Nimbo World collects no data. This page lists, item by item, what is not collected.</p>
 <p class="updated">Last updated: {PRIVACY_UPDATED["en"]} · Version {PRIVACY_VERSION}</p>
 
 <div class="card">
@@ -240,6 +277,7 @@ PRIVACY_EN = f'''<h1>Privacy Policy</h1>
     <li>No account, no sign-in, no email address.</li>
     <li>There is <strong>no</strong> ad network, analytics tool, or crash-reporting service.</li>
     <li>Everything the app creates stays <strong>on the device only</strong>.</li>
+    <li>Reminders arrive switched off, are scheduled on the device, and no remote notification exists.</li>
     <li>Deleting the app deletes all of the data it produced.</li>
   </ul>
 </div>
@@ -264,9 +302,11 @@ cannot access it:</p>
 <div class="scroll"><table>
   <tr><th>Data</th><th>Purpose</th></tr>
   <tr><td>Completed activities, earned stickers and badges</td><td>Showing progress</td></tr>
+  <tr><td>Stars, day streak, collection and the chosen avatar</td><td>The island world and its shop</td></tr>
   <tr><td>Screen-time records and the daily limit</td><td>Parental controls</td></tr>
   <tr><td>Drawings and coloring pages</td><td>The art gallery</td></tr>
   <tr><td>Audio, language, accessibility and sleep settings</td><td>Remembering preferences</td></tr>
+  <tr><td>Reminder choices and their times</td><td>Reminders scheduled on the device</td></tr>
   <tr><td>Selected age band</td><td>Setting content difficulty</td></tr>
   <tr><td>Purchase state</td><td>Keeping full access unlocked</td></tr>
 </table></div>
@@ -283,6 +323,9 @@ contains no child's name, because Nimbo never knows it.</p>
 </ul>
 <p>The purpose is to deliver a maintenance notice or a required-update notice. If the request fails,
 the app uses its cached or bundled configuration and continues to work normally.</p>
+<p>The reminders a parent can switch on use no network either: the time you choose is handed to the
+device's own scheduler. Nimbo <strong>registers no push token</strong> and talks to no notification
+server, so the app is not remotely addressable.</p>
 
 <h2>4. Third-party services</h2>
 <p>Nimbo contains exactly <strong>one</strong> third-party component:</p>
@@ -300,6 +343,8 @@ purchase receipt. In that process:</p>
 with the store; Nimbo never sees card information.</p>
 <p>The app contains <strong>no</strong> ad network, analytics tool (Google Analytics, Firebase
 Analytics and similar), crash-reporting service or social media SDK.</p>
+<p>The app may occasionally open the store's own rating prompt. That window belongs to the operating
+system; Nimbo does not learn your rating, your review, or whether you saw it at all.</p>
 
 <h2>5. Children's privacy</h2>
 <p>Nimbo is designed for children and collects no personal data from them.</p>
@@ -320,23 +365,40 @@ adult verification step.</p>
 <div class="scroll"><table>
   <tr><th>Permission</th><th>Why</th></tr>
   <tr><td>Modify audio settings (Android)</td><td>Audio routing for game sounds and sleep sounds.</td></tr>
+  <tr><td>Notifications (iOS and Android)</td><td>Requested only when a parent switches reminders on. Reminders are scheduled on the device; nothing is sent remotely.</td></tr>
+  <tr><td>File picker</td><td>Opens only while restoring a backup, and reads only the file you pick.</td></tr>
 </table></div>
-<p>Camera, microphone, location, contacts, photos and notification permissions are
-<strong>never requested</strong>. The check in front of the parent area needs no permission either:
-Nimbo never asks for a fingerprint, a face scan or a device passcode — it asks a multiplication
-question inside the app.</p>
+<p>Camera, microphone, location, contacts and photo permissions are <strong>never requested</strong>.
+The notification permission is not asked for at launch but at the moment a parent switches a reminder
+on; every reminder arrives switched off, and none of them points at a purchase. The check in front of
+the parent area needs no permission either: Nimbo never asks for a fingerprint, a face scan or a
+device passcode — it asks a multiplication question inside the app.</p>
 
-<h2>7. Deleting data</h2>
+<h2>7. Backup files</h2>
+<p>Nimbo has no account and no cloud sync, so a lost phone would take every star and drawing with it.
+Parent Area → Backup is the answer to that: progress, stars, drawings and settings are written to a
+single JSON file and the device's share sheet opens.</p>
+<ul>
+  <li>The file is <strong>yours</strong>. Nimbo uploads it nowhere, keeps no copy, and does not know
+  where you saved it.</li>
+  <li>Restoring reads only the file you picked, and writes back only the records it recognises.</li>
+  <li>Purchases are <strong>not</strong> part of a backup; they are tied to your store account and
+  come back through “Restore Purchases”.</li>
+  <li>The file contains no child's name, because Nimbo never knows it.</li>
+</ul>
+
+<h2>8. Deleting data</h2>
 <p>Because we hold no data about you on any server, there is no record to delete. To remove the data
-on the device, simply uninstall the app; progress, drawings, settings and reports go with it.</p>
+on the device, simply uninstall the app; progress, drawings, settings and reports go with it. A backup
+file or PDF report you exported earlier stays wherever you saved it — deleting those is up to you.</p>
 <p>Your purchase is tied to your store account. If you delete and reinstall the app, you can recover
 full access from Parent Area → Purchases with <strong>Restore Purchases</strong>.</p>
 
-<h2>8. Changes to this policy</h2>
+<h2>9. Changes to this policy</h2>
 <p>If this policy changes, the date and version number on this page are updated. If an update changes
 the app's data behaviour, the change is also noted in the app's release notes.</p>
 
-<h2>9. Contact</h2>
+<h2>10. Contact</h2>
 <p>Data controller: <strong>{OWNER}</strong> (Türkiye)</p>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p>Privacy questions are answered within 30 days at the latest.</p>'''
@@ -347,11 +409,11 @@ the app's data behaviour, the change is also noted in the app's release notes.</
 # ---------------------------------------------------------------------------
 
 TERMS_TR = f'''<h1>Kullanım Koşulları</h1>
-<p class="lede">Nimbo'yu indirerek veya kullanarak bu koşulları kabul etmiş olursunuz.</p>
-<p class="updated">Son güncelleme: {UPDATED["tr"]} · Sürüm 1.0</p>
+<p class="lede">Nimbo Dünyası'nı indirerek veya kullanarak bu koşulları kabul etmiş olursunuz.</p>
+<p class="updated">Son güncelleme: {UPDATED["tr"]} · Sürüm {TERMS_VERSION}</p>
 
 <h2>1. Lisans</h2>
-<p>Nimbo, {OWNER} tarafından geliştirilen bir mobil uygulamadır. Uygulamayı kişisel ve ticari
+<p><strong>Nimbo Dünyası</strong> (bu sayfada “Nimbo”), {OWNER} tarafından geliştirilen bir mobil uygulamadır. Uygulamayı kişisel ve ticari
 olmayan amaçlarla, sahibi olduğunuz cihazlarda kullanmanız için size devredilemez ve münhasır
 olmayan bir lisans verilir.</p>
 <p>Uygulamayı kopyalayamaz, kaynak koduna dönüştüremez, değiştiremez, kiralayamaz, satamaz veya
@@ -364,6 +426,9 @@ içeriğini ayrı bir ürün olarak dağıtamazsınız. Uygulamadaki tüm metin,
 <ul>
   <li>Nimbo'nun bir bölümü ücretsizdir. <strong>Tam erişim</strong> tek seferlik bir satın almadır;
   abonelik değildir ve yenilenmez.</li>
+  <li>Satın almadan önce, ebeveyn alanından <strong>3 günlük deneme</strong> başlatılabilir. Deneme
+  cihaz başına bir kezdir, yalnızca bir yetişkin tarafından başlatılır, süresi dolduğunda kendiliğinden
+  biter ve hiçbir aşamada otomatik satın almaya dönüşmez.</li>
   <li>Satın alma işlemi Apple App Store veya Google Play üzerinden yürütülür. Ödeme, faturalandırma
   ve iade işlemleri ilgili mağazanın kurallarına tabidir.</li>
   <li>İade talepleri doğrudan mağazaya iletilir: iOS için
@@ -380,36 +445,42 @@ lisansın sona ermesine yol açar.</p>
 
 <h2>4. Çocukların kullanımı</h2>
 <p>Nimbo çocuklar için tasarlanmıştır ancak sözleşme ehliyeti olan bir yetişkinin sorumluluğu
-altında kullanılmalıdır. Ebeveyn alanına ve satın alma seçeneklerine erişim cihazın kendi kilidiyle
-korunur; cihazın kilidini paylaştığınız kişiler bu alanlara erişebilir.</p>
+altında kullanılmalıdır. Ebeveyn alanı, satın alma seçenekleri ve uygulamadan dışarı açılan
+bağlantılar, kelimelerle yazılmış bir çarpma sorusuyla korunur. Bu doğrulama küçük bir çocuğu
+durdurmak içindir; okuma ve çarpım bilen biri için bir güvenlik önlemi değildir.</p>
 
-<h2>5. Garanti reddi</h2>
+<h2>5. Yedekler ve cihazdaki veriler</h2>
+<p>Nimbo hesap tutmaz ve buluta veri yüklemez; ilerleme yalnızca cihazda durur. Dışa aktardığınız
+yedek dosyasının saklanması ve korunması size aittir — Nimbo bir kopyasını tutmadığı için kaybolan
+bir cihazın veya silinen bir dosyanın verisini geri getiremez.</p>
+
+<h2>6. Garanti reddi</h2>
 <p>Uygulama “olduğu gibi” sunulur. Kesintisiz veya hatasız çalışacağı garanti edilmez. Nimbo bir
 eğitim aracıdır; pedagojik, tıbbi veya gelişimsel bir teşhis veya tavsiye niteliği taşımaz.</p>
 
-<h2>6. Sorumluluk sınırı</h2>
+<h2>7. Sorumluluk sınırı</h2>
 <p>Yürürlükteki hukukun izin verdiği azami ölçüde, uygulamanın kullanımından doğan dolaylı,
 arızi veya sonuç niteliğindeki zararlardan sorumluluk kabul edilmez. Her hâlükârda toplam
 sorumluluk, uygulama için ödediğiniz tutarla sınırlıdır.</p>
 
-<h2>7. Değişiklikler</h2>
+<h2>8. Değişiklikler</h2>
 <p>Bu koşullar güncellenebilir. Değişiklikler bu sayfada yayımlandığı tarihte yürürlüğe girer;
 sayfanın üstündeki tarih ve sürüm numarası güncellenir.</p>
 
-<h2>8. Geçerli hukuk</h2>
+<h2>9. Geçerli hukuk</h2>
 <p>Bu koşullar Türkiye Cumhuriyeti hukukuna tabidir. Uyuşmazlıklarda İstanbul mahkemeleri ve icra
 daireleri yetkilidir. Bulunduğunuz ülkedeki tüketici mevzuatının size tanıdığı zorunlu haklar
 saklıdır.</p>
 
-<h2>9. İletişim</h2>
+<h2>10. İletişim</h2>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
 
 TERMS_EN = f'''<h1>Terms of Use</h1>
-<p class="lede">By downloading or using Nimbo you accept these terms.</p>
-<p class="updated">Last updated: {UPDATED["en"]} · Version 1.0</p>
+<p class="lede">By downloading or using Nimbo World you accept these terms.</p>
+<p class="updated">Last updated: {UPDATED["en"]} · Version {TERMS_VERSION}</p>
 
 <h2>1. Licence</h2>
-<p>Nimbo is a mobile application developed by {OWNER}. You are granted a non-transferable,
+<p><strong>Nimbo World</strong> (“Nimbo” on this page) is a mobile application developed by {OWNER}. You are granted a non-transferable,
 non-exclusive licence to use the app for personal, non-commercial purposes on devices you own.</p>
 <p>You may not copy, reverse-engineer, modify, rent, sell or redistribute the app or its content as a
 separate product. All rights in the text, artwork, audio and software of the app are reserved.</p>
@@ -420,6 +491,9 @@ separate product. All rights in the text, artwork, audio and software of the app
 <ul>
   <li>Part of Nimbo is free. <strong>Full access</strong> is a one-time purchase; it is not a
   subscription and does not renew.</li>
+  <li>Before buying, a <strong>3-day trial</strong> can be started from the parent area. It is
+  available once per device, is started only by an adult, ends by itself when the three days are up,
+  and never turns into an automatic purchase.</li>
   <li>Purchases are processed by the Apple App Store or Google Play. Payment, billing and refunds are
   governed by that store's rules.</li>
   <li>Refund requests go directly to the store: for iOS,
@@ -435,28 +509,34 @@ Attempts to bypass purchase protection or parental verification terminate the li
 
 <h2>4. Use by children</h2>
 <p>Nimbo is designed for children but must be used under the responsibility of an adult with legal
-capacity to contract. Access to the parent area and purchase options is protected by the device's own
-lock; anyone you share that lock with can reach those areas.</p>
+capacity to contract. The parent area, the purchase options and every link that leaves the app are
+protected by a multiplication question written out in words. That check is there to stop a young
+child; it is not a security measure against someone who can read and multiply.</p>
 
-<h2>5. Disclaimer of warranties</h2>
+<h2>5. Backups and on-device data</h2>
+<p>Nimbo keeps no account and uploads nothing to a cloud; progress lives on the device only. Keeping
+and protecting a backup file you export is your responsibility — because Nimbo holds no copy, it
+cannot recover the data of a lost device or a deleted file.</p>
+
+<h2>6. Disclaimer of warranties</h2>
 <p>The app is provided “as is”. It is not warranted to operate uninterrupted or error-free. Nimbo is
 an educational tool; it is not a pedagogical, medical or developmental diagnosis or advice.</p>
 
-<h2>6. Limitation of liability</h2>
+<h2>7. Limitation of liability</h2>
 <p>To the maximum extent permitted by applicable law, no liability is accepted for indirect,
 incidental or consequential damages arising from use of the app. In any event total liability is
 limited to the amount you paid for the app.</p>
 
-<h2>7. Changes</h2>
+<h2>8. Changes</h2>
 <p>These terms may be updated. Changes take effect on the date they are published on this page, and
 the date and version number at the top are updated.</p>
 
-<h2>8. Governing law</h2>
+<h2>9. Governing law</h2>
 <p>These terms are governed by the laws of the Republic of Türkiye. The courts and enforcement
 offices of Istanbul have jurisdiction. Mandatory consumer rights available to you in your country of
 residence are unaffected.</p>
 
-<h2>9. Contact</h2>
+<h2>10. Contact</h2>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
 
 
@@ -467,39 +547,67 @@ residence are unaffected.</p>
 SUPPORT_TR = f'''<h1>Destek</h1>
 <p class="lede">Sorunuz mu var? Yazın — en geç iki iş günü içinde yanıt veriyoruz.</p>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
+<p class="updated">Bu sayfa Nimbo Dünyası {APP_VERSION} sürümünü anlatır.</p>
 
 <h2>Sık sorulanlar</h2>
 
 <h3>Ebeveyn alanına nasıl girerim?</h3>
 <p>Çocuk ana ekranındaki ayarlar düğmesine dokunun. Kelimelerle yazılmış bir çarpma sorusu sorulur
-—&nbsp;“sekiz çarpı dokuz” gibi&nbsp;— ve altı sayıdan doğru olanına dokunarak yanıtlarsınız. Yanlış
-dokunursanız yeni bir soru gelir. Nimbo parmak izi, yüz tanıma veya cihaz parolası istemez.</p>
+—&nbsp;“sekiz çarpı dokuz” gibi&nbsp;— ve altı sayıdan doğru olanına dokunarak yanıtlarsınız. İlk
+yanlış yanıttan sonra yeni bir soru gelir; art arda yanlış yanıtlarda 15, 30, 60 ve 120 saniyelik bir
+bekleme başlar ve bu bekleme sayfayı kapatınca ya da uygulamayı yeniden açınca sıfırlanmaz. Nimbo
+parmak izi, yüz tanıma veya cihaz parolası istemez.</p>
 
 <h3>Hangi bölümler ücretsiz?</h3>
-<p>203 etkinliğin 97'si ücretsizdir. Sanat Atölyesi'nin tamamı (52 etkinlik) ücretsizdir; Matematik,
-Türkçe, Dikkat, Uyku ve Robot bölümlerinin bir kısmı ücretsiz, kalanı tam erişimle açılır.</p>
+<p>{ACTIVITIES} etkinliğin {FREE_ACTIVITIES}'ü ücretsizdir ve altı bölümün <em>her birinde</em>
+ücretsiz etkinlik vardır: Sanat Atölyesi 100 etkinliğin 50'si, Matematik Evi 82'nin 25'i, Türkçe
+Kitaplığı 98'in 30'u, Dikkat Parkı 98'in 30'u, Uyku Odası 24'ün 8'i, Robot Atölyesi 100'ün 21'i.</p>
 
 <h3>Tam erişim nedir?</h3>
-<p>Tek seferlik bir satın almadır — abonelik değildir, yenilenmez. Tüm bölümlerdeki 203 etkinliğin
-tamamını açar. Satın alma, ebeveyn doğrulamasının arkasındadır ve satın alma anında ikinci kez
-doğrulama istenir.</p>
+<p>Tek seferlik bir satın almadır — abonelik değildir, yenilenmez. Tüm bölümlerdeki {ACTIVITIES}
+etkinliğin tamamını açar. Satın alma, ebeveyn doğrulamasının arkasındadır ve satın alma anında ikinci
+kez doğrulama istenir.</p>
+
+<h3>Satın almadan önce deneyebilir miyim?</h3>
+<p>Evet. Ebeveyn Alanı'ndan <strong>3 günlük deneme</strong> başlatabilirsiniz; bu üç gün boyunca
+bütün oyunlar açık kalır. Deneme cihaz başına bir kezdir, yalnızca bir yetişkin tarafından başlatılır,
+süre dolduğunda kendiliğinden biter ve otomatik satın almaya dönüşmez. Çocuğa denemenin bittiğine dair
+bir uyarı da gösterilmez.</p>
 
 <h3>Satın alımımı nasıl geri yüklerim?</h3>
 <p>Ebeveyn Alanı → Ayarlar → Satın Alımlar → <strong>Satın Alımları Geri Yükle</strong>. Mağaza
 hesabınızla giriş yapmış olmanız yeterlidir; yeniden ödeme alınmaz.</p>
 
-<h3>Yeni bir cihaza geçtim, ilerlemem gitti.</h3>
-<p>İlerleme, çizimler ve ayarlar yalnızca cihazda tutulur ve cihazlar arasında senkronize edilmez —
-bu, hiçbir veri toplamamanın doğal sonucudur. Satın alma kaydınız mağaza hesabınıza bağlı olduğu için
-<strong>Satın Alımları Geri Yükle</strong> ile geri gelir.</p>
+<h3>Yeni bir cihaza geçiyorum. İlerlemeyi taşıyabilir miyim?</h3>
+<p>Evet. Ebeveyn Alanı → Yedekleme bölümünden <strong>İlerlemeyi dışa aktar</strong> ile yıldızları,
+çıkartmaları, çizimleri ve ayarları tek bir dosyaya yazın; yeni cihazda aynı bölümden
+<strong>Yedek dosyası seç</strong> ile geri yükleyin. Dosya sizde kalır, internete gönderilmez.
+Nimbo'nun hesabı ve bulut eşitlemesi yoktur — hiçbir veri toplamamanın doğal sonucu budur — bu yüzden
+yedek dosyası bir cihazdan diğerine geçmenin tek yoludur.</p>
+<p>Satın almalar yedeğe dahil değildir; onlar mağaza hesabınıza bağlıdır ve <strong>Satın Alımları
+Geri Yükle</strong> ile geri gelir.</p>
 
 <h3>Ekran süresi limitini nasıl ayarlarım?</h3>
 <p>Ebeveyn Alanı → Ayarlar → Genel bölümünden günlük limiti belirleyebilirsiniz. Limit dolduğunda
-çocuk bir bekleme ekranı görür; bir yetişkin düğmeyi 3 saniye basılı tutarak 15 dakika ekleyebilir.</p>
+çocuk bir dinlenme ekranı görür; 15 dakika eklemek için bir yetişkinin aynı çarpma sorusunu yanıtlaması
+gerekir.</p>
+
+<h3>Bildirim gönderiyor musunuz?</h3>
+<p>Uygulama kendiliğinden bildirim göndermez ve üç hatırlatmanın hepsi <strong>kapalı</strong> gelir.
+Ebeveyn Alanı → Hatırlatmalar bölümünden uyku saati, günlük hediye ve seri hatırlatmalarını
+açabilirsiniz. Hatırlatmalar cihazın kendi zamanlayıcısına kurulur: sunucu, hesap ve uzaktan bildirim
+yoktur, hiçbiri satın almaya yönlendirmez.</p>
+
+<h3>Mağazadaki yıldızlar gerçek para mı?</h3>
+<p>Hayır. Yıldızlar yalnızca oyunlarda kazanılır; satın alınamaz ve şansa bağlı kutu yoktur. Dünya
+Mağazası'ndaki avatar, tema ve çıkartmaların tamamı görünüm değiştiren kozmetik eşyalardır.</p>
 
 <h3>Dili nasıl değiştiririm?</h3>
-<p>Ebeveyn Alanı → Ayarlar → Genel → Dil. Türkçe ve İngilizce desteklenir; seslendirmeler de seçilen
-dile göre değişir.</p>
+<p>Ebeveyn Alanı → Ayarlar → Dil. Türkçe ve İngilizce desteklenir; seslendirmeler de seçilen dile göre
+değişir.</p>
+
+<h3>Tablette çalışıyor mu?</h3>
+<p>Evet. iPhone ve iPad ile Android telefon ve tabletlerde çalışır.</p>
 
 <h3>Verilerimi nasıl silerim?</h3>
 <p>Uygulamayı kaldırmanız yeterlidir. Sunucularımızda size ait hiçbir veri bulunmadığı için silinmesi
@@ -518,41 +626,65 @@ ve işletim sistemi sürümünüzü eklerseniz daha hızlı yardımcı olabiliri
 SUPPORT_EN = f'''<h1>Support</h1>
 <p class="lede">Have a question? Write to us — we reply within two working days.</p>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
+<p class="updated">This page describes Nimbo World {APP_VERSION}.</p>
 
 <h2>Frequently asked</h2>
 
 <h3>How do I open the parent area?</h3>
 <p>Tap the settings button on the child home screen. A multiplication question spelled out in words
-—&nbsp;“eight times nine”&nbsp;— is asked, and you answer by tapping the right one of six numbers. A
-wrong tap brings up a new question. Nimbo never asks for a fingerprint, a face scan or a device
-passcode.</p>
+—&nbsp;“eight times nine”&nbsp;— is asked, and you answer by tapping the right one of six numbers. The
+first wrong tap brings up a new question; repeated wrong answers add a wait of 15, 30, 60 and 120
+seconds, and that wait survives closing the sheet or relaunching the app. Nimbo never asks for a
+fingerprint, a face scan or a device passcode.</p>
 
 <h3>Which parts are free?</h3>
-<p>97 of the 203 activities are free. The whole Art Studio (52 activities) is free; the numeracy,
-language, attention, sleep and robot sections have some free activities, with the rest unlocked by
-full access.</p>
+<p>{FREE_ACTIVITIES} of the {ACTIVITIES} activities are free, and <em>every one</em> of the six
+sections has free activities: 50 of the Art Studio's 100, 25 of Math House's 82, 30 of the Language
+Library's 98, 30 of Focus Park's 98, 8 of the Sleep Room's 24 and 21 of the Robot Workshop's 100.</p>
 
 <h3>What is full access?</h3>
-<p>A one-time purchase — not a subscription, and it does not renew. It unlocks all 203 activities
-across every section. The purchase sits behind parental verification, and a second verification is
-requested at the moment of purchase.</p>
+<p>A one-time purchase — not a subscription, and it does not renew. It unlocks all {ACTIVITIES}
+activities across every section. The purchase sits behind parental verification, and a second
+verification is requested at the moment of purchase.</p>
+
+<h3>Can I try it before buying?</h3>
+<p>Yes. A <strong>3-day trial</strong> can be started from the parent area, and every game stays open
+for those three days. It is available once per device, is started only by an adult, ends by itself,
+and never turns into an automatic purchase. The child is shown no notice when it ends.</p>
 
 <h3>How do I restore my purchase?</h3>
 <p>Parent Area → Settings → Purchases → <strong>Restore Purchases</strong>. You only need to be signed
 in with your store account; you are not charged again.</p>
 
-<h3>I moved to a new device and my progress is gone.</h3>
-<p>Progress, drawings and settings are kept only on the device and are not synchronised between
-devices — that is the natural consequence of collecting no data. Your purchase is tied to your store
-account, so <strong>Restore Purchases</strong> brings it back.</p>
+<h3>I am moving to a new device. Can I take the progress with me?</h3>
+<p>Yes. In Parent Area → Backup, use <strong>Export progress</strong> to write stars, stickers,
+drawings and settings into a single file, then <strong>Pick a backup file</strong> in the same place
+on the new device to restore it. The file stays with you and is never sent over the internet. Nimbo
+has no account and no cloud sync — the natural consequence of collecting no data — so the backup file
+is the way to move between devices.</p>
+<p>Purchases are not part of a backup; they are tied to your store account and come back with
+<strong>Restore Purchases</strong>.</p>
 
 <h3>How do I set the screen-time limit?</h3>
 <p>Parent Area → Settings → General lets you set a daily limit. When it is reached the child sees a
-resting screen; an adult can add 15 minutes by holding a button for 3 seconds.</p>
+resting screen; to add 15 minutes an adult answers the same multiplication question.</p>
+
+<h3>Do you send notifications?</h3>
+<p>The app sends nothing on its own, and all three reminders arrive <strong>switched off</strong>. In
+Parent Area → Reminders you can switch on the bedtime, daily-gift and streak reminders. They are
+scheduled by the device's own timer: no server, no account, no remote notification, and none of them
+points at a purchase.</p>
+
+<h3>Are the stars in the shop real money?</h3>
+<p>No. Stars are earned in the games only; they cannot be bought and there is no chance-based box.
+Every avatar, theme and sticker in the World Shop is a cosmetic item that changes how things look.</p>
 
 <h3>How do I change the language?</h3>
-<p>Parent Area → Settings → General → Language. Turkish and English are supported, and the spoken
-audio follows the selected language.</p>
+<p>Parent Area → Settings → Language. Turkish and English are supported, and the spoken audio follows
+the selected language.</p>
+
+<h3>Does it work on a tablet?</h3>
+<p>Yes. It runs on iPhone and iPad, and on Android phones and tablets.</p>
 
 <h3>How do I delete my data?</h3>
 <p>Simply uninstall the app. Because we hold no data about you on any server, there is no other record
@@ -575,14 +707,15 @@ and operating system version helps us help you faster.</p>'''
 
 LANDING_TR = f'''<div class="hero">
   <img src="/assets/icon.svg" alt="Nimbo uygulama simgesi" width="88" height="88">
-  <div><h1>Nimbo</h1><p class="lede">3–6 yaş için reklamsız, takipsiz bir öğrenme dünyası.</p></div>
+  <div><h1>Nimbo Dünyası</h1><p class="lede">3–6 yaş için reklamsız, takipsiz bir öğrenme dünyası.</p></div>
 </div>
 
 {STORES_TR}
 
-<p>Nimbo; matematik, Türkçe, dikkat, sanat, robotik ve uyku rutini olmak üzere altı bölümde
-<strong>203 etkinlik</strong> sunar. Tamamı Türkçe ve İngilizce seslendirilmiştir ve internet
-bağlantısı olmadan çalışır.</p>
+<p>Nimbo Dünyası; matematik, Türkçe, dikkat, sanat, robotik ve uyku rutini olmak üzere altı bölümde
+<strong>{ACTIVITIES} etkinlik</strong> sunar; {FREE_ACTIVITIES}'ü ücretsizdir. Tamamı Türkçe ve
+İngilizce seslendirilmiştir, iPhone, iPad ve Android cihazlarda çalışır ve internet bağlantısı
+gerektirmez.</p>
 
 <div class="card">
   <h2>Nimbo'nun sözü</h2>
@@ -592,16 +725,28 @@ bağlantısı olmadan çalışır.</p>
     <li><span class="tick">✓</span><div><strong>Veriler cihazda</strong><span class="sub">İlerleme, ekran süresi, çizimler, ayarlar ve ebeveyn raporları yalnızca cihazda tutulur.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Çocuk hesabı yok</strong><span class="sub">Oturum açma, profil oluşturma veya e-posta verme gerekmez.</span></div></li>
     <li><span class="tick">✓</span><div><strong>İnternet gerekmez</strong><span class="sub">Etkinliklerin tamamı çevrimdışı çalışır.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">Tam erişim tek seferlik bir satın almadır.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">Tam erişim tek seferlik bir satın almadır; öncesinde 3 günlük deneme başlatılabilir.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Bildirimler kapalı gelir</strong><span class="sub">Üç hatırlatmayı yalnızca ebeveyn açar; açılınca da cihazda kurulur, uzaktan bildirim gönderilmez.</span></div></li>
   </ul>
 </div>
+
+<h2>Bulutların üstündeki ada</h2>
+<p>Çocuk haritadan bir yer seçer, oyunlarda yıldız toplar ve bu yıldızlarla Dünya Mağazası'ndan
+avatar, tema ve çıkartma açar. Mağazada gerçek para yoktur: yıldızlar satın alınamaz, şansa bağlı
+kutu bulunmaz ve açılan her şey yalnızca görünüm değiştirir. Günlük hediye, gün serisi ve koleksiyon
+defteri de aynı kuralla çalışır — hepsi oynayarak kazanılır.</p>
+
+<h2>Uyku Odası</h2>
+<p>Gecenin kendi bölümü var: 13 masal, 4 nefes egzersizi, 6 sakin ses ve bir gece rutini. Masalların
+her sayfası iki dilde seslendirilmiştir; henüz okuyamayan bir çocuk da tek başına dinleyebilir.</p>
 
 <h2>Ebeveyn alanı</h2>
 <p>Ebeveyn alanı, satın alma seçenekleri ve gizlilik ekranı bir ebeveyn sorusuyla korunur:
 kelimelerle yazılmış bir çarpma sorusu, altı sayıdan birine dokunarak yanıtlanır. Küçük bir çocuk
 geçemez; Nimbo sizden parola, parmak izi veya yüz doğrulaması istemez.</p>
-<p>Ebeveyn alanında ekran süresi limiti, bölüm bazlı içerik kontrolü, ilerleme istatistikleri ve
-cihazda oluşturulan PDF raporları bulunur.</p>
+<p>Ebeveyn alanında ekran süresi limiti, bölüm bazlı içerik kontrolü, ilerleme istatistikleri,
+cihazda oluşturulan PDF raporları, kapalı gelen hatırlatmalar ve ilerlemeyi tek dosyaya aktaran
+yedekleme bulunur.</p>
 
 <h2>Belgeler</h2>
 <div class="scroll"><table>
@@ -615,14 +760,15 @@ cihazda oluşturulan PDF raporları bulunur.</p>
 
 LANDING_EN = f'''<div class="hero">
   <img src="/assets/icon.svg" alt="Nimbo app icon" width="88" height="88">
-  <div><h1>Nimbo</h1><p class="lede">An ad-free, tracking-free learning world for ages 3–6.</p></div>
+  <div><h1>Nimbo World</h1><p class="lede">An ad-free, tracking-free learning world for ages 3–6.</p></div>
 </div>
 
 {STORES_EN}
 
-<p>Nimbo offers <strong>203 activities</strong> across six areas: numeracy, language, attention, art,
-robotics and a bedtime routine. Every activity is voiced in both Turkish and English, and the whole
-app works without an internet connection.</p>
+<p>Nimbo World offers <strong>{ACTIVITIES} activities</strong> across six areas: numeracy, language,
+attention, art, robotics and a bedtime routine — {FREE_ACTIVITIES} of them free. Every activity is
+voiced in both English and Turkish, it runs on iPhone, iPad and Android, and the whole app works
+without an internet connection.</p>
 
 <div class="card">
   <h2>The Nimbo promise</h2>
@@ -632,16 +778,29 @@ app works without an internet connection.</p>
     <li><span class="tick">✓</span><div><strong>Data stays on the device</strong><span class="sub">Progress, screen time, drawings, settings and parent reports are kept only on this device.</span></div></li>
     <li><span class="tick">✓</span><div><strong>No child account</strong><span class="sub">No sign-in, no profile, no email address.</span></div></li>
     <li><span class="tick">✓</span><div><strong>No internet needed</strong><span class="sub">Every activity works offline.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">Full access is a single one-time purchase.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">Full access is a single one-time purchase, with a 3-day trial before it.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Reminders start off</strong><span class="sub">Only a parent switches the three reminders on; even then they are scheduled on the device and nothing is sent remotely.</span></div></li>
   </ul>
 </div>
+
+<h2>An island above the clouds</h2>
+<p>The child picks a place on the map, earns stars in the games, and spends them in the World Shop on
+avatars, themes and stickers. There is no real money in that shop: stars cannot be bought, there is no
+chance-based box, and everything it opens only changes how things look. The daily gift, the day streak
+and the collection book follow the same rule — all of them are earned by playing.</p>
+
+<h2>The Sleep Room</h2>
+<p>The night has a section of its own: 13 stories, 4 breathing exercises, 6 calm soundscapes and a
+bedtime routine. Every story page is voiced in both languages, so a child who cannot read yet can
+listen alone.</p>
 
 <h2>Parent area</h2>
 <p>The parent area, purchase options and privacy screen sit behind a parent gate: a multiplication
 question written out in words, answered by tapping one of six numbers. A young child cannot pass it,
 and Nimbo never asks for a password, a fingerprint or your face.</p>
-<p>The parent area holds a screen-time limit, per-module content controls, progress statistics and
-PDF reports generated on the device.</p>
+<p>The parent area holds a screen-time limit, per-module content controls, progress statistics, PDF
+reports generated on the device, reminders that arrive switched off, and a backup that writes all the
+progress into one file.</p>
 
 <h2>Documents</h2>
 <div class="scroll"><table>
@@ -671,8 +830,9 @@ DOWNLOAD_TR = f'''<div class="hero">
 {STORES_TR}
 
 <p>Bulutların üstünde bir ada var. Haritada altı yer duruyor: Matematik Evi, Türkçe Kitaplığı,
-Dikkat Parkı, Sanat Atölyesi, Robot Atölyesi ve Uyku Odası. Her yönerge ve her masal sayfası
-Türkçe ve İngilizce seslendirilmiştir; henüz okuyamayan bir çocuk da tek başına gezebilir.</p>
+Dikkat Parkı, Sanat Atölyesi, Robot Atölyesi ve Uyku Odası — toplam {ACTIVITIES} etkinlik. Her yönerge
+ve her masal sayfası Türkçe ve İngilizce seslendirilmiştir; henüz okuyamayan bir çocuk da tek başına
+gezebilir.</p>
 
 <div class="card">
   <h2>Nimbo'nun sözü</h2>
@@ -681,7 +841,7 @@ Türkçe ve İngilizce seslendirilmiştir; henüz okuyamayan bir çocuk da tek b
     <li><span class="tick">✓</span><div><strong>Takip yok</strong><span class="sub">Analitik profili, davranışsal izleme, üçüncü taraf takip pikseli veya reklam kimliği kullanılmaz.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Veriler cihazda</strong><span class="sub">İlerleme, ekran süresi, çizimler, ayarlar ve ebeveyn raporları yalnızca cihazda tutulur.</span></div></li>
     <li><span class="tick">✓</span><div><strong>İnternet gerekmez</strong><span class="sub">Etkinliklerin tamamı çevrimdışı çalışır.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">Etkinliklerin yaklaşık yarısı ücretsizdir; tam erişim tek seferlik bir satın almadır.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">{FREE_ACTIVITIES} etkinlik ücretsizdir; tam erişim tek seferlik bir satın almadır ve öncesinde 3 gün denenebilir.</span></div></li>
   </ul>
 </div>
 
@@ -698,8 +858,9 @@ DOWNLOAD_EN = f'''<div class="hero">
 {STORES_EN}
 
 <p>There is an island above the clouds. Six places sit on its map: Math House, Language Library,
-Focus Park, Art Studio, Robot Workshop and the Sleep Room. Every instruction and every story page
-is voiced in both English and Turkish, so a child who cannot read yet can explore alone.</p>
+Focus Park, Art Studio, Robot Workshop and the Sleep Room — {ACTIVITIES} activities in all. Every
+instruction and every story page is voiced in both English and Turkish, so a child who cannot read yet
+can explore alone.</p>
 
 <div class="card">
   <h2>Nimbo's promise</h2>
@@ -708,7 +869,7 @@ is voiced in both English and Turkish, so a child who cannot read yet can explor
     <li><span class="tick">✓</span><div><strong>No tracking</strong><span class="sub">No analytics profile, no behavioural tracking, no third-party pixel, no advertising identifier.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Data stays on the device</strong><span class="sub">Progress, screen time, drawings, settings and parent reports never leave it.</span></div></li>
     <li><span class="tick">✓</span><div><strong>No internet needed</strong><span class="sub">Every activity works offline.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">About half the activities are free; full access is a one-time purchase.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">{FREE_ACTIVITIES} activities are free; full access is a one-time purchase, and can be tried for 3 days first.</span></div></li>
   </ul>
 </div>
 
@@ -719,10 +880,10 @@ answers the common questions.</p>
 
 
 PAGES = [
-    ("/", "tr", "Nimbo — Çocuklar için reklamsız öğrenme uygulaması",
-     "Nimbo, 3–6 yaş için 203 etkinlik içeren, reklamsız ve takipsiz bir öğrenme uygulaması. Tüm veriler cihazda kalır.", LANDING_TR),
-    ("/en", "en", "Nimbo — An ad-free learning app for children",
-     "Nimbo is an ad-free, tracking-free learning app for ages 3–6 with 203 activities. All data stays on the device.", LANDING_EN),
+    ("/", "tr", "Nimbo Dünyası — Çocuklar için reklamsız öğrenme uygulaması",
+     f"Nimbo Dünyası, 3–6 yaş için {ACTIVITIES} etkinlik içeren, reklamsız ve takipsiz bir öğrenme uygulaması. Tüm veriler cihazda kalır.", LANDING_TR),
+    ("/en", "en", "Nimbo World — An ad-free learning app for children",
+     f"Nimbo World is an ad-free, tracking-free learning app for ages 3–6 with {ACTIVITIES} activities. All data stays on the device.", LANDING_EN),
     ("/gizlilik", "tr", "Gizlilik Politikası — Nimbo",
      "Nimbo hiçbir kişisel veri toplamaz. Reklam, analitik ve takip yoktur; tüm veriler cihazda kalır.", PRIVACY_TR),
     ("/privacy", "en", "Privacy Policy — Nimbo",

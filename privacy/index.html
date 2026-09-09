@@ -27,8 +27,8 @@
 </div></header>
 <main id="main">
 <h1>Privacy Policy</h1>
-<p class="lede">Nimbo collects no data. This page lists, item by item, what is not collected.</p>
-<p class="updated">Last updated: 3 September 2026 · Version 1.1</p>
+<p class="lede">Nimbo World collects no data. This page lists, item by item, what is not collected.</p>
+<p class="updated">Last updated: 9 September 2026 · Version 1.2</p>
 
 <div class="card">
   <h2>In short</h2>
@@ -37,6 +37,7 @@
     <li>No account, no sign-in, no email address.</li>
     <li>There is <strong>no</strong> ad network, analytics tool, or crash-reporting service.</li>
     <li>Everything the app creates stays <strong>on the device only</strong>.</li>
+    <li>Reminders arrive switched off, are scheduled on the device, and no remote notification exists.</li>
     <li>Deleting the app deletes all of the data it produced.</li>
   </ul>
 </div>
@@ -61,9 +62,11 @@ cannot access it:</p>
 <div class="scroll"><table>
   <tr><th>Data</th><th>Purpose</th></tr>
   <tr><td>Completed activities, earned stickers and badges</td><td>Showing progress</td></tr>
+  <tr><td>Stars, day streak, collection and the chosen avatar</td><td>The island world and its shop</td></tr>
   <tr><td>Screen-time records and the daily limit</td><td>Parental controls</td></tr>
   <tr><td>Drawings and coloring pages</td><td>The art gallery</td></tr>
   <tr><td>Audio, language, accessibility and sleep settings</td><td>Remembering preferences</td></tr>
+  <tr><td>Reminder choices and their times</td><td>Reminders scheduled on the device</td></tr>
   <tr><td>Selected age band</td><td>Setting content difficulty</td></tr>
   <tr><td>Purchase state</td><td>Keeping full access unlocked</td></tr>
 </table></div>
@@ -80,6 +83,9 @@ contains no child's name, because Nimbo never knows it.</p>
 </ul>
 <p>The purpose is to deliver a maintenance notice or a required-update notice. If the request fails,
 the app uses its cached or bundled configuration and continues to work normally.</p>
+<p>The reminders a parent can switch on use no network either: the time you choose is handed to the
+device's own scheduler. Nimbo <strong>registers no push token</strong> and talks to no notification
+server, so the app is not remotely addressable.</p>
 
 <h2>4. Third-party services</h2>
 <p>Nimbo contains exactly <strong>one</strong> third-party component:</p>
@@ -97,6 +103,8 @@ purchase receipt. In that process:</p>
 with the store; Nimbo never sees card information.</p>
 <p>The app contains <strong>no</strong> ad network, analytics tool (Google Analytics, Firebase
 Analytics and similar), crash-reporting service or social media SDK.</p>
+<p>The app may occasionally open the store's own rating prompt. That window belongs to the operating
+system; Nimbo does not learn your rating, your review, or whether you saw it at all.</p>
 
 <h2>5. Children's privacy</h2>
 <p>Nimbo is designed for children and collects no personal data from them.</p>
@@ -117,23 +125,40 @@ adult verification step.</p>
 <div class="scroll"><table>
   <tr><th>Permission</th><th>Why</th></tr>
   <tr><td>Modify audio settings (Android)</td><td>Audio routing for game sounds and sleep sounds.</td></tr>
+  <tr><td>Notifications (iOS and Android)</td><td>Requested only when a parent switches reminders on. Reminders are scheduled on the device; nothing is sent remotely.</td></tr>
+  <tr><td>File picker</td><td>Opens only while restoring a backup, and reads only the file you pick.</td></tr>
 </table></div>
-<p>Camera, microphone, location, contacts, photos and notification permissions are
-<strong>never requested</strong>. The check in front of the parent area needs no permission either:
-Nimbo never asks for a fingerprint, a face scan or a device passcode — it asks a multiplication
-question inside the app.</p>
+<p>Camera, microphone, location, contacts and photo permissions are <strong>never requested</strong>.
+The notification permission is not asked for at launch but at the moment a parent switches a reminder
+on; every reminder arrives switched off, and none of them points at a purchase. The check in front of
+the parent area needs no permission either: Nimbo never asks for a fingerprint, a face scan or a
+device passcode — it asks a multiplication question inside the app.</p>
 
-<h2>7. Deleting data</h2>
+<h2>7. Backup files</h2>
+<p>Nimbo has no account and no cloud sync, so a lost phone would take every star and drawing with it.
+Parent Area → Backup is the answer to that: progress, stars, drawings and settings are written to a
+single JSON file and the device's share sheet opens.</p>
+<ul>
+  <li>The file is <strong>yours</strong>. Nimbo uploads it nowhere, keeps no copy, and does not know
+  where you saved it.</li>
+  <li>Restoring reads only the file you picked, and writes back only the records it recognises.</li>
+  <li>Purchases are <strong>not</strong> part of a backup; they are tied to your store account and
+  come back through “Restore Purchases”.</li>
+  <li>The file contains no child's name, because Nimbo never knows it.</li>
+</ul>
+
+<h2>8. Deleting data</h2>
 <p>Because we hold no data about you on any server, there is no record to delete. To remove the data
-on the device, simply uninstall the app; progress, drawings, settings and reports go with it.</p>
+on the device, simply uninstall the app; progress, drawings, settings and reports go with it. A backup
+file or PDF report you exported earlier stays wherever you saved it — deleting those is up to you.</p>
 <p>Your purchase is tied to your store account. If you delete and reinstall the app, you can recover
 full access from Parent Area → Purchases with <strong>Restore Purchases</strong>.</p>
 
-<h2>8. Changes to this policy</h2>
+<h2>9. Changes to this policy</h2>
 <p>If this policy changes, the date and version number on this page are updated. If an update changes
 the app's data behaviour, the change is also noted in the app's release notes.</p>
 
-<h2>9. Contact</h2>
+<h2>10. Contact</h2>
 <p>Data controller: <strong>Mahir Uslu</strong> (Türkiye)</p>
 <p class="contact"><a href="mailto:nimbo@mahiruslu.com">nimbo@mahiruslu.com</a></p>
 <p>Privacy questions are answered within 30 days at the latest.</p>

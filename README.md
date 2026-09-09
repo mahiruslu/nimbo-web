@@ -32,6 +32,39 @@ Turkish and English versions of a page live next to each other in `build.py` on
 purpose: a legal page whose two translations drift apart is worse than one
 language. Change both or neither.
 
+### The facts the pages state
+
+Four constants at the top of `build.py` are the only place a number about the
+app is written down, so the landing, download and support pages cannot disagree:
+
+- `APP_VERSION` — the version a visitor can actually download. It moves with the
+  store release, **not** with the app repo, and it moves together with
+  `latestVersion` in `config/app-config.json`. It is currently **1.7.0**.
+- `ACTIVITIES` / `FREE_ACTIVITIES` — 502 and 164. Recount them from the content
+  packs rather than from memory:
+
+```bash
+cd ../nimbo && npx tsx -e "
+import { loadContentPacksFromFileSystem } from './scripts/loadContentPacks';
+let total = 0, free = 0;
+for (const pack of loadContentPacksFromFileSystem()) {
+  const acts = pack.activities ?? [];
+  total += acts.length;
+  free += acts.filter((a) => a.isFree).length;
+  console.log(pack.id, acts.length, acts.filter((a) => a.isFree).length);
+}
+console.log('TOTAL', total, 'FREE', free);
+"
+```
+
+- `PRIVACY_VERSION` / `TERMS_VERSION` — bumped only when that document's text
+  changes, each with its own date.
+
+**The site describes the shipped build, not the working tree.** Copy that
+describes an unreleased version has to go live *with* that release: it is what
+App Review and a parent read while deciding, and a page promising a feature the
+downloadable binary does not have is worse than a stale one.
+
 Brand assets are copied from `nimbo/src/assets/brand/`, which is generated from
 geometry — re-copy rather than hand-editing them here.
 
@@ -56,10 +89,24 @@ console.log(isRemoteAppConfig(raw) ? 'PASS' : 'FAIL');
 Two rules that are easy to get wrong:
 
 - **`version` must increase.** The app ignores a payload whose `version` is
-  lower than the copy it already cached.
+  lower than the copy it already cached. It is at **7**, tracking the app's
+  minor version (1.**7**.0) so the two are readable side by side — the counter
+  only has to grow, so skipping numbers is free.
 - **`storeUrl` must be an HTTPS URL on `apps.apple.com` or `play.google.com`.**
   Anything else — including an empty string — fails validation for the whole
   document, not just that field.
+
+`minVersion` drives the undismissable force-update screen and `latestVersion` is
+currently read by nothing, so bumping `latestVersion` to the shipping version is
+a record, not a behaviour change. **Raising `minVersion` locks every older
+install out until it updates** — only do it deliberately, and never above a
+version that is actually live in both stores.
+
+The optional `events` key schedules the seasonal world events. It is absent
+here on purpose: the payload can only pick *when* an event runs, never invent
+one — the ids, copy and rewards are authored in the app
+(`src/core/world/world-event-rules.ts`), and an install that cannot reach this
+file simply runs no event.
 
 ### The iOS store URL
 
