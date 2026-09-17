@@ -36,12 +36,16 @@ STORES_EN = f'''<div class="stores">
 # a build a visitor can actually download, so this moves with the release, not
 # with the repo: bump it when the store listing goes live, together with
 # `latestVersion` in config/app-config.json.
-APP_VERSION = "1.7.0"
+APP_VERSION = "1.8.0"
 
 # Activity counts, straight from the content packs (see README). One place, so
 # the landing, download and support pages cannot drift apart.
-ACTIVITIES = 502
-FREE_ACTIVITIES = 164
+ACTIVITIES = 503
+FREE_ACTIVITIES = 165
+
+# The Sleep Room's own breakdown, stated on the landing page in both languages.
+# Only the story count has moved so far, but it moves with every story added.
+STORIES = 14
 
 # Each document carries its own date and version. They used to share one
 # constant, which meant editing the privacy policy silently restamped the terms
@@ -737,7 +741,7 @@ kutu bulunmaz ve açılan her şey yalnızca görünüm değiştirir. Günlük h
 defteri de aynı kuralla çalışır — hepsi oynayarak kazanılır.</p>
 
 <h2>Uyku Odası</h2>
-<p>Gecenin kendi bölümü var: 13 masal, 4 nefes egzersizi, 6 sakin ses ve bir gece rutini. Masalların
+<p>Gecenin kendi bölümü var: {STORIES} masal, 4 nefes egzersizi, 6 sakin ses ve bir gece rutini. Masalların
 her sayfası iki dilde seslendirilmiştir; henüz okuyamayan bir çocuk da tek başına dinleyebilir.</p>
 
 <h2>Ebeveyn alanı</h2>
@@ -790,7 +794,7 @@ chance-based box, and everything it opens only changes how things look. The dail
 and the collection book follow the same rule — all of them are earned by playing.</p>
 
 <h2>The Sleep Room</h2>
-<p>The night has a section of its own: 13 stories, 4 breathing exercises, 6 calm soundscapes and a
+<p>The night has a section of its own: {STORIES} stories, 4 breathing exercises, 6 calm soundscapes and a
 bedtime routine. Every story page is voiced in both languages, so a child who cannot read yet can
 listen alone.</p>
 

@@ -34,13 +34,13 @@ language. Change both or neither.
 
 ### The facts the pages state
 
-Four constants at the top of `build.py` are the only place a number about the
+Five constants at the top of `build.py` are the only place a number about the
 app is written down, so the landing, download and support pages cannot disagree:
 
 - `APP_VERSION` — the version a visitor can actually download. It moves with the
   store release, **not** with the app repo, and it moves together with
-  `latestVersion` in `config/app-config.json`. It is currently **1.7.0**.
-- `ACTIVITIES` / `FREE_ACTIVITIES` — 502 and 164. Recount them from the content
+  `latestVersion` in `config/app-config.json`. It is currently **1.8.0**.
+- `ACTIVITIES` / `FREE_ACTIVITIES` — 503 and 165. Recount them from the content
   packs rather than from memory:
 
 ```bash
@@ -54,6 +54,20 @@ for (const pack of loadContentPacksFromFileSystem()) {
   console.log(pack.id, acts.length, acts.filter((a) => a.isFree).length);
 }
 console.log('TOTAL', total, 'FREE', free);
+"
+```
+
+- `STORIES` — the bedtime stories in the Sleep Room, stated on both landing
+  pages. It is 14; the rest of that sentence (4 breathing exercises, 6
+  soundscapes, 1 routine) has not moved yet. Recount it the same way:
+
+```bash
+cd ../nimbo && npx tsx -e "
+import { loadContentPacksFromFileSystem } from './scripts/loadContentPacks';
+const sleep = loadContentPacksFromFileSystem().find((p) => p.id === 'sleep-1');
+const counts = {};
+for (const a of sleep.activities ?? []) counts[a.sleepMode ?? a.type] = (counts[a.sleepMode ?? a.type] ?? 0) + 1;
+console.log(counts);
 "
 ```
 
@@ -89,18 +103,20 @@ console.log(isRemoteAppConfig(raw) ? 'PASS' : 'FAIL');
 Two rules that are easy to get wrong:
 
 - **`version` must increase.** The app ignores a payload whose `version` is
-  lower than the copy it already cached. It is at **7**, tracking the app's
-  minor version (1.**7**.0) so the two are readable side by side — the counter
-  only has to grow, so skipping numbers is free.
+  lower than the copy it already cached. It is at **9**, tracking the app's
+  minor version (1.**8**.0 — 8 was 1.7.0's force-update bump) so the two stay
+  readable side by side; the counter only has to grow, so skipping numbers is
+  free.
 - **`storeUrl` must be an HTTPS URL on `apps.apple.com` or `play.google.com`.**
   Anything else — including an empty string — fails validation for the whole
   document, not just that field.
 
-`minVersion` drives the undismissable force-update screen and `latestVersion` is
-currently read by nothing, so bumping `latestVersion` to the shipping version is
-a record, not a behaviour change. **Raising `minVersion` locks every older
-install out until it updates** — only do it deliberately, and never above a
-version that is actually live in both stores.
+`minVersion` drives the undismissable force-update screen. `latestVersion` is
+read too, since 1.8.0: the parent area shows the installed version and offers the
+optional update when the store has a newer one — nothing is ever shown to the
+child for it. **Raising `minVersion` locks every older install out until it
+updates** — only do it deliberately, and never above a version that is actually
+live in both stores. It is at **1.8.0**, which both stores approved.
 
 The optional `events` key schedules the seasonal world events. It is absent
 here on purpose: the payload can only pick *when* an event runs, never invent
