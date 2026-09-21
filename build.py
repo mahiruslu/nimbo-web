@@ -36,7 +36,7 @@ STORES_EN = f'''<div class="stores">
 # a build a visitor can actually download, so this moves with the release, not
 # with the repo: bump it when the store listing goes live, together with
 # `latestVersion` in config/app-config.json.
-APP_VERSION = "1.8.0"
+APP_VERSION = "1.9.0"
 
 # Activity counts, straight from the content packs (see README). One place, so
 # the landing, download and support pages cannot drift apart.
@@ -50,10 +50,10 @@ STORIES = 14
 # Each document carries its own date and version. They used to share one
 # constant, which meant editing the privacy policy silently restamped the terms
 # as if they had been reissued too.
-UPDATED = {"tr": "9 Eylül 2026", "en": "9 September 2026"}
-TERMS_VERSION = "1.1"
-PRIVACY_UPDATED = {"tr": "9 Eylül 2026", "en": "9 September 2026"}
-PRIVACY_VERSION = "1.2"
+UPDATED = {"tr": "21 Eylül 2026", "en": "21 September 2026"}
+TERMS_VERSION = "1.2"
+PRIVACY_UPDATED = {"tr": "21 Eylül 2026", "en": "21 September 2026"}
+PRIVACY_VERSION = "1.3"
 HOST = ORIGIN.split("://", 1)[1]
 
 # path -> its counterpart in the other language
@@ -195,13 +195,16 @@ hiçbir bildirim sunucusuyla konuşmaz; uygulama uzaktan adreslenebilir değildi
 <h2>4. Üçüncü taraf hizmetler</h2>
 <p>Nimbo'da <strong>tek bir</strong> üçüncü taraf bileşen vardır:</p>
 <h3>RevenueCat (satın alma doğrulama)</h3>
-<p>Tam erişim satın alındığında veya “Satın Alımları Geri Yükle” kullanıldığında, satın alma
-makbuzunun doğrulanması için RevenueCat, Inc. hizmeti kullanılır. Bu kapsamda:</p>
+<p>Tam erişim satın alındığında, bir abonelik yenilendiğinde veya “Satın Alımları Geri Yükle”
+kullanıldığında, satın alma makbuzunun doğrulanması için RevenueCat, Inc. hizmeti kullanılır. Bu
+kapsamda:</p>
 <ul>
   <li>Nimbo RevenueCat'e <strong>kimlik bilgisi vermez</strong>; anonim bir uygulama kullanıcı kimliği kullanılır.</li>
   <li>Reklam kimliği toplama özelliği <strong>kapalıdır</strong> ve hiçbir zaman çağrılmaz.</li>
   <li>RevenueCat, satın alma doğrulaması için mağazadan gelen makbuz bilgisini ve temel cihaz/ülke
   bilgisini işler. Bu veriler reklam veya takip amacıyla kullanılmaz.</li>
+  <li>Abonelik durumu (deneme süresi, yenileme tarihi, iptal) yalnızca ebeveyn alanında gösterilmek
+  üzere RevenueCat'ten okunur; Nimbo bunu başka bir yere iletmez.</li>
   <li>Ayrıntılar: <a href="https://www.revenuecat.com/privacy" rel="noopener">revenuecat.com/privacy</a></li>
 </ul>
 <p>Satın alma işleminin kendisi Apple App Store veya Google Play tarafından yürütülür. Ödeme
@@ -334,13 +337,15 @@ server, so the app is not remotely addressable.</p>
 <h2>4. Third-party services</h2>
 <p>Nimbo contains exactly <strong>one</strong> third-party component:</p>
 <h3>RevenueCat (purchase validation)</h3>
-<p>When full access is purchased, or “Restore Purchases” is used, RevenueCat, Inc. validates the
-purchase receipt. In that process:</p>
+<p>When full access is purchased, a subscription renews, or “Restore Purchases” is used, RevenueCat,
+Inc. validates the purchase receipt. In that process:</p>
 <ul>
   <li>Nimbo provides <strong>no identity information</strong> to RevenueCat; an anonymous app user ID is used.</li>
   <li>Advertising-identifier collection is <strong>disabled</strong> and is never called.</li>
   <li>RevenueCat processes the store receipt and basic device/country information in order to validate
   the purchase. This data is not used for advertising or tracking.</li>
+  <li>Subscription state (trial period, renewal date, cancellation) is read from RevenueCat only to be
+  shown in the parent area; Nimbo sends it nowhere else.</li>
   <li>Details: <a href="https://www.revenuecat.com/privacy" rel="noopener">revenuecat.com/privacy</a></li>
 </ul>
 <p>The purchase itself is carried out by the Apple App Store or Google Play. Your payment details stay
@@ -428,11 +433,15 @@ içeriğini ayrı bir ürün olarak dağıtamazsınız. Uygulamadaki tüm metin,
 
 <h2>2. Satın alma ve iade</h2>
 <ul>
-  <li>Nimbo'nun bir bölümü ücretsizdir. <strong>Tam erişim</strong> tek seferlik bir satın almadır;
-  abonelik değildir ve yenilenmez.</li>
-  <li>Satın almadan önce, ebeveyn alanından <strong>3 günlük deneme</strong> başlatılabilir. Deneme
-  cihaz başına bir kezdir, yalnızca bir yetişkin tarafından başlatılır, süresi dolduğunda kendiliğinden
-  biter ve hiçbir aşamada otomatik satın almaya dönüşmez.</li>
+  <li>Nimbo'nun bir bölümü ücretsizdir. <strong>Tam erişim</strong> üç şekilde alınabilir: yıllık
+  abonelik, aylık abonelik ya da tek seferlik satın alma. Tek seferlik satın alma yenilenmez; abonelik
+  zorunlu değildir.</li>
+  <li>Yıllık abonelik <strong>3 günlük ücretsiz deneme</strong> ile başlar. Deneme, mağazanın tanıdığı
+  bir tanıtım teklifidir: deneme bitmeden mağaza hesabınızdan iptal edilmezse yıllık ücret alınır ve
+  abonelik başlar. Aylık abonelikte ve tek seferlik satın almada deneme yoktur.</li>
+  <li>Aylık ve yıllık abonelikler, dönem sonundan önce iptal edilmedikçe <strong>otomatik
+  yenilenir</strong>. İptal, App Store veya Google Play hesap ayarlarından yapılır ve mevcut dönemin
+  sonunda geçerli olur; o güne kadar erişim açık kalır.</li>
   <li>Satın alma işlemi Apple App Store veya Google Play üzerinden yürütülür. Ödeme, faturalandırma
   ve iade işlemleri ilgili mağazanın kurallarına tabidir.</li>
   <li>İade talepleri doğrudan mağazaya iletilir: iOS için
@@ -493,11 +502,16 @@ separate product. All rights in the text, artwork, audio and software of the app
 
 <h2>2. Purchases and refunds</h2>
 <ul>
-  <li>Part of Nimbo is free. <strong>Full access</strong> is a one-time purchase; it is not a
-  subscription and does not renew.</li>
-  <li>Before buying, a <strong>3-day trial</strong> can be started from the parent area. It is
-  available once per device, is started only by an adult, ends by itself when the three days are up,
-  and never turns into an automatic purchase.</li>
+  <li>Part of Nimbo is free. <strong>Full access</strong> can be bought three ways: a yearly
+  subscription, a monthly subscription, or a one-time purchase. The one-time purchase does not renew;
+  a subscription is never required.</li>
+  <li>The yearly subscription starts with a <strong>3-day free trial</strong>. The trial is an
+  introductory offer granted by the store: unless it is cancelled from your store account before it
+  ends, the yearly price is charged and the subscription begins. The monthly subscription and the
+  one-time purchase have no trial.</li>
+  <li>Monthly and yearly subscriptions <strong>renew automatically</strong> unless cancelled before
+  the end of the period. Cancellation is done from your App Store or Google Play account settings and
+  takes effect at the end of the current period; access stays open until then.</li>
   <li>Purchases are processed by the Apple App Store or Google Play. Payment, billing and refunds are
   governed by that store's rules.</li>
   <li>Refund requests go directly to the store: for iOS,
@@ -568,15 +582,17 @@ parmak izi, yüz tanıma veya cihaz parolası istemez.</p>
 Kitaplığı 98'in 30'u, Dikkat Parkı 98'in 30'u, Uyku Odası 24'ün 8'i, Robot Atölyesi 100'ün 21'i.</p>
 
 <h3>Tam erişim nedir?</h3>
-<p>Tek seferlik bir satın almadır — abonelik değildir, yenilenmez. Tüm bölümlerdeki {ACTIVITIES}
-etkinliğin tamamını açar. Satın alma, ebeveyn doğrulamasının arkasındadır ve satın alma anında ikinci
-kez doğrulama istenir.</p>
+<p>Tüm bölümlerdeki {ACTIVITIES} etkinliğin tamamını açar. Üç şekilde alınabilir: yıllık abonelik,
+aylık abonelik ya da bir kez ödenen, hiç yenilenmeyen tam erişim. Abonelik zorunlu değildir. Güncel
+fiyatlar uygulama içindeki satın alma ekranında gösterilir. Satın alma seçenekleri ebeveyn
+doğrulamasının arkasındadır; ödemeyi mağaza kendi onayıyla tamamlar.</p>
 
 <h3>Satın almadan önce deneyebilir miyim?</h3>
-<p>Evet. Ebeveyn Alanı'ndan <strong>3 günlük deneme</strong> başlatabilirsiniz; bu üç gün boyunca
-bütün oyunlar açık kalır. Deneme cihaz başına bir kezdir, yalnızca bir yetişkin tarafından başlatılır,
-süre dolduğunda kendiliğinden biter ve otomatik satın almaya dönüşmez. Çocuğa denemenin bittiğine dair
-bir uyarı da gösterilmez.</p>
+<p>Evet. <strong>Yıllık abonelik 3 gün ücretsiz</strong> başlar; bu üç gün boyunca bütün oyunlar
+açıktır. Deneme mağazanın tanıtım teklifidir: bitmeden mağaza hesabınızdan iptal etmezseniz yıllık
+ücret alınır ve abonelik devam eder. İptal ederseniz üç günün sonunda erişim ücretsiz bölüme döner.
+Aylık planda ve tek seferlik satın almada deneme yoktur. Deneme yalnızca bir yetişkin tarafından,
+ebeveyn alanından başlatılır; çocuğa fiyat veya uyarı gösterilmez.</p>
 
 <h3>Satın alımımı nasıl geri yüklerim?</h3>
 <p>Ebeveyn Alanı → Ayarlar → Satın Alımlar → <strong>Satın Alımları Geri Yükle</strong>. Mağaza
@@ -647,14 +663,18 @@ sections has free activities: 50 of the Art Studio's 100, 25 of Math House's 82,
 Library's 98, 30 of Focus Park's 98, 8 of the Sleep Room's 24 and 21 of the Robot Workshop's 100.</p>
 
 <h3>What is full access?</h3>
-<p>A one-time purchase — not a subscription, and it does not renew. It unlocks all {ACTIVITIES}
-activities across every section. The purchase sits behind parental verification, and a second
-verification is requested at the moment of purchase.</p>
+<p>It unlocks all {ACTIVITIES} activities across every section. It can be bought three ways: a
+yearly subscription, a monthly subscription, or a one-time purchase that never renews. A subscription
+is never required. Current prices are shown on the purchase screen inside the app. Purchase options
+sit behind parental verification; the store completes the payment with its own confirmation.</p>
 
 <h3>Can I try it before buying?</h3>
-<p>Yes. A <strong>3-day trial</strong> can be started from the parent area, and every game stays open
-for those three days. It is available once per device, is started only by an adult, ends by itself,
-and never turns into an automatic purchase. The child is shown no notice when it ends.</p>
+<p>Yes. <strong>The yearly subscription starts with 3 days free</strong>, and every game is open for
+those three days. The trial is the store's introductory offer: unless you cancel from your store
+account before it ends, the yearly price is charged and the subscription continues. If you cancel,
+access returns to the free section when the three days are up. The monthly plan and the one-time
+purchase have no trial. The trial is started only by an adult, from the parent area; the child is
+shown no price and no notice.</p>
 
 <h3>How do I restore my purchase?</h3>
 <p>Parent Area → Settings → Purchases → <strong>Restore Purchases</strong>. You only need to be signed

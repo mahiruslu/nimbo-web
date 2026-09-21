@@ -1,5 +1,5 @@
 {
-  "version": 9,
+  "version": 10,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -10,7 +10,7 @@
   "update": {
     "ios": {
       "minVersion": "1.8.0",
-      "latestVersion": "1.8.0",
+      "latestVersion": "1.9.0",
       "storeUrl": "https://apps.apple.com/tr/app/nimbo/id6794716737",
       "forceMessage": {
         "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",
@@ -23,7 +23,7 @@
     },
     "android": {
       "minVersion": "1.8.0",
-      "latestVersion": "1.8.0",
+      "latestVersion": "1.9.0",
       "storeUrl": "https://play.google.com/store/apps/details?id=com.nimbo.kids",
       "forceMessage": {
         "tr": "Devam etmek için lütfen Nimbo'yu güncelleyin.",
@@ -45,7 +45,7 @@
     "paywall": true
   },
   "monetization": {
-    "fullUnlockProductId": "nimbo_full_unlock",
+    "fullUnlockProductId": "nimbo_liftime",
     "artPackProductId": "nimbo_pack_art_1"
   },
   "content": {
