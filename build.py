@@ -36,22 +36,23 @@ STORES_EN = f'''<div class="stores">
 # a build a visitor can actually download, so this moves with the release, not
 # with the repo: bump it when the store listing goes live, together with
 # `latestVersion` in config/app-config.json.
-APP_VERSION = "1.9.0"
+APP_VERSION = "1.10.0"
 
 # Activity counts, straight from the content packs (see README). One place, so
 # the landing, download and support pages cannot drift apart.
-ACTIVITIES = 503
-FREE_ACTIVITIES = 165
+ACTIVITIES = 590
+FREE_ACTIVITIES = 185
 
 # The Sleep Room's own breakdown, stated on the landing page in both languages.
-# Only the story count has moved so far, but it moves with every story added.
-STORIES = 14
+# Stories and breathing exercises move with every release that adds one.
+BREATHING = 6
+STORIES = 17
 
 # Each document carries its own date and version. They used to share one
 # constant, which meant editing the privacy policy silently restamped the terms
 # as if they had been reissued too.
-UPDATED = {"tr": "21 Eylül 2026", "en": "21 September 2026"}
-TERMS_VERSION = "1.2"
+UPDATED = {"tr": "29 Eylül 2026", "en": "29 September 2026"}
+TERMS_VERSION = "1.3"
 PRIVACY_UPDATED = {"tr": "21 Eylül 2026", "en": "21 September 2026"}
 PRIVACY_VERSION = "1.3"
 HOST = ORIGIN.split("://", 1)[1]
@@ -459,8 +460,8 @@ lisansın sona ermesine yol açar.</p>
 <h2>4. Çocukların kullanımı</h2>
 <p>Nimbo çocuklar için tasarlanmıştır ancak sözleşme ehliyeti olan bir yetişkinin sorumluluğu
 altında kullanılmalıdır. Ebeveyn alanı, satın alma seçenekleri ve uygulamadan dışarı açılan
-bağlantılar, kelimelerle yazılmış bir çarpma sorusuyla korunur. Bu doğrulama küçük bir çocuğu
-durdurmak içindir; okuma ve çarpım bilen biri için bir güvenlik önlemi değildir.</p>
+bağlantılar, “8 × 9” gibi bir çarpma sorusuyla korunur. Bu doğrulama küçük bir çocuğu
+durdurmak içindir; çarpım bilen biri için bir güvenlik önlemi değildir.</p>
 
 <h2>5. Yedekler ve cihazdaki veriler</h2>
 <p>Nimbo hesap tutmaz ve buluta veri yüklemez; ilerleme yalnızca cihazda durur. Dışa aktardığınız
@@ -528,8 +529,8 @@ Attempts to bypass purchase protection or parental verification terminate the li
 <h2>4. Use by children</h2>
 <p>Nimbo is designed for children but must be used under the responsibility of an adult with legal
 capacity to contract. The parent area, the purchase options and every link that leaves the app are
-protected by a multiplication question written out in words. That check is there to stop a young
-child; it is not a security measure against someone who can read and multiply.</p>
+protected by a multiplication question such as “8 × 9”. That check is there to stop a young
+child; it is not a security measure against someone who can multiply.</p>
 
 <h2>5. Backups and on-device data</h2>
 <p>Nimbo keeps no account and uploads nothing to a cloud; progress lives on the device only. Keeping
@@ -570,16 +571,16 @@ SUPPORT_TR = f'''<h1>Destek</h1>
 <h2>Sık sorulanlar</h2>
 
 <h3>Ebeveyn alanına nasıl girerim?</h3>
-<p>Çocuk ana ekranındaki ayarlar düğmesine dokunun. Kelimelerle yazılmış bir çarpma sorusu sorulur
-—&nbsp;“sekiz çarpı dokuz” gibi&nbsp;— ve altı sayıdan doğru olanına dokunarak yanıtlarsınız. İlk
+<p>Çocuk ana ekranındaki ayarlar düğmesine dokunun. Bir çarpma sorusu sorulur
+—&nbsp;“8 × 9” gibi&nbsp;— ve altı sayıdan doğru olanına dokunarak yanıtlarsınız. İlk
 yanlış yanıttan sonra yeni bir soru gelir; art arda yanlış yanıtlarda 15, 30, 60 ve 120 saniyelik bir
 bekleme başlar ve bu bekleme sayfayı kapatınca ya da uygulamayı yeniden açınca sıfırlanmaz. Nimbo
 parmak izi, yüz tanıma veya cihaz parolası istemez.</p>
 
 <h3>Hangi bölümler ücretsiz?</h3>
 <p>{ACTIVITIES} etkinliğin {FREE_ACTIVITIES}'ü ücretsizdir ve altı bölümün <em>her birinde</em>
-ücretsiz etkinlik vardır: Sanat Atölyesi 100 etkinliğin 50'si, Matematik Evi 82'nin 25'i, Türkçe
-Kitaplığı 98'in 30'u, Dikkat Parkı 98'in 30'u, Uyku Odası 24'ün 8'i, Robot Atölyesi 100'ün 21'i.</p>
+ücretsiz etkinlik vardır: Sanat Atölyesi 100 etkinliğin 50'si, Matematik Evi 94'ün 29'u, Türkçe
+Kitaplığı 140'ın 42'si, Dikkat Parkı 112'nin 33'ü, Uyku Odası 30'un 10'u, Robot Atölyesi 114'ün 21'i.</p>
 
 <h3>Tam erişim nedir?</h3>
 <p>Tüm bölümlerdeki {ACTIVITIES} etkinliğin tamamını açar. Üç şekilde alınabilir: yıllık abonelik,
@@ -591,8 +592,8 @@ doğrulamasının arkasındadır; ödemeyi mağaza kendi onayıyla tamamlar.</p>
 <p>Evet. <strong>Yıllık abonelik 3 gün ücretsiz</strong> başlar; bu üç gün boyunca bütün oyunlar
 açıktır. Deneme mağazanın tanıtım teklifidir: bitmeden mağaza hesabınızdan iptal etmezseniz yıllık
 ücret alınır ve abonelik devam eder. İptal ederseniz üç günün sonunda erişim ücretsiz bölüme döner.
-Aylık planda ve tek seferlik satın almada deneme yoktur. Deneme yalnızca bir yetişkin tarafından,
-ebeveyn alanından başlatılır; çocuğa fiyat veya uyarı gösterilmez.</p>
+Aylık planda ve tek seferlik satın almada deneme yoktur. Deneme yalnızca ebeveyn doğrulamasının
+arkasından, bir yetişkin tarafından başlatılır; çocuğa fiyat veya uyarı gösterilmez.</p>
 
 <h3>Satın alımımı nasıl geri yüklerim?</h3>
 <p>Ebeveyn Alanı → Ayarlar → Satın Alımlar → <strong>Satın Alımları Geri Yükle</strong>. Mağaza
@@ -651,16 +652,16 @@ SUPPORT_EN = f'''<h1>Support</h1>
 <h2>Frequently asked</h2>
 
 <h3>How do I open the parent area?</h3>
-<p>Tap the settings button on the child home screen. A multiplication question spelled out in words
-—&nbsp;“eight times nine”&nbsp;— is asked, and you answer by tapping the right one of six numbers. The
+<p>Tap the settings button on the child home screen. A multiplication question
+—&nbsp;“8 × 9”, say&nbsp;— is asked, and you answer by tapping the right one of six numbers. The
 first wrong tap brings up a new question; repeated wrong answers add a wait of 15, 30, 60 and 120
 seconds, and that wait survives closing the sheet or relaunching the app. Nimbo never asks for a
 fingerprint, a face scan or a device passcode.</p>
 
 <h3>Which parts are free?</h3>
 <p>{FREE_ACTIVITIES} of the {ACTIVITIES} activities are free, and <em>every one</em> of the six
-sections has free activities: 50 of the Art Studio's 100, 25 of Math House's 82, 30 of the Language
-Library's 98, 30 of Focus Park's 98, 8 of the Sleep Room's 24 and 21 of the Robot Workshop's 100.</p>
+sections has free activities: 50 of the Art Studio's 100, 29 of Math House's 94, 42 of the Language
+Library's 140, 33 of Focus Park's 112, 10 of the Sleep Room's 30 and 21 of the Robot Workshop's 114.</p>
 
 <h3>What is full access?</h3>
 <p>It unlocks all {ACTIVITIES} activities across every section. It can be bought three ways: a
@@ -673,7 +674,7 @@ sit behind parental verification; the store completes the payment with its own c
 those three days. The trial is the store's introductory offer: unless you cancel from your store
 account before it ends, the yearly price is charged and the subscription continues. If you cancel,
 access returns to the free section when the three days are up. The monthly plan and the one-time
-purchase have no trial. The trial is started only by an adult, from the parent area; the child is
+purchase have no trial. The trial is started only by an adult, behind parental verification; the child is
 shown no price and no notice.</p>
 
 <h3>How do I restore my purchase?</h3>
@@ -749,7 +750,7 @@ gerektirmez.</p>
     <li><span class="tick">✓</span><div><strong>Veriler cihazda</strong><span class="sub">İlerleme, ekran süresi, çizimler, ayarlar ve ebeveyn raporları yalnızca cihazda tutulur.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Çocuk hesabı yok</strong><span class="sub">Oturum açma, profil oluşturma veya e-posta verme gerekmez.</span></div></li>
     <li><span class="tick">✓</span><div><strong>İnternet gerekmez</strong><span class="sub">Etkinliklerin tamamı çevrimdışı çalışır.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">Tam erişim tek seferlik bir satın almadır; öncesinde 3 günlük deneme başlatılabilir.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Abonelik zorunlu değil</strong><span class="sub">Tam erişim tek seferlik de alınabilir; yıllık abonelikte 3 günlük deneme vardır.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Bildirimler kapalı gelir</strong><span class="sub">Üç hatırlatmayı yalnızca ebeveyn açar; açılınca da cihazda kurulur, uzaktan bildirim gönderilmez.</span></div></li>
   </ul>
 </div>
@@ -761,12 +762,12 @@ kutu bulunmaz ve açılan her şey yalnızca görünüm değiştirir. Günlük h
 defteri de aynı kuralla çalışır — hepsi oynayarak kazanılır.</p>
 
 <h2>Uyku Odası</h2>
-<p>Gecenin kendi bölümü var: {STORIES} masal, 4 nefes egzersizi, 6 sakin ses ve bir gece rutini. Masalların
+<p>Gecenin kendi bölümü var: {STORIES} masal, {BREATHING} nefes egzersizi, 6 sakin ses ve bir gece rutini. Masalların
 her sayfası iki dilde seslendirilmiştir; henüz okuyamayan bir çocuk da tek başına dinleyebilir.</p>
 
 <h2>Ebeveyn alanı</h2>
 <p>Ebeveyn alanı, satın alma seçenekleri ve gizlilik ekranı bir ebeveyn sorusuyla korunur:
-kelimelerle yazılmış bir çarpma sorusu, altı sayıdan birine dokunarak yanıtlanır. Küçük bir çocuk
+bir çarpma sorusu, altı sayıdan birine dokunarak yanıtlanır. Küçük bir çocuk
 geçemez; Nimbo sizden parola, parmak izi veya yüz doğrulaması istemez.</p>
 <p>Ebeveyn alanında ekran süresi limiti, bölüm bazlı içerik kontrolü, ilerleme istatistikleri,
 cihazda oluşturulan PDF raporları, kapalı gelen hatırlatmalar ve ilerlemeyi tek dosyaya aktaran
@@ -802,7 +803,7 @@ without an internet connection.</p>
     <li><span class="tick">✓</span><div><strong>Data stays on the device</strong><span class="sub">Progress, screen time, drawings, settings and parent reports are kept only on this device.</span></div></li>
     <li><span class="tick">✓</span><div><strong>No child account</strong><span class="sub">No sign-in, no profile, no email address.</span></div></li>
     <li><span class="tick">✓</span><div><strong>No internet needed</strong><span class="sub">Every activity works offline.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">Full access is a single one-time purchase, with a 3-day trial before it.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No subscription required</strong><span class="sub">Full access can also be bought once; the yearly plan starts with a 3-day trial.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Reminders start off</strong><span class="sub">Only a parent switches the three reminders on; even then they are scheduled on the device and nothing is sent remotely.</span></div></li>
   </ul>
 </div>
@@ -814,13 +815,13 @@ chance-based box, and everything it opens only changes how things look. The dail
 and the collection book follow the same rule — all of them are earned by playing.</p>
 
 <h2>The Sleep Room</h2>
-<p>The night has a section of its own: {STORIES} stories, 4 breathing exercises, 6 calm soundscapes and a
+<p>The night has a section of its own: {STORIES} stories, {BREATHING} breathing exercises, 6 calm soundscapes and a
 bedtime routine. Every story page is voiced in both languages, so a child who cannot read yet can
 listen alone.</p>
 
 <h2>Parent area</h2>
 <p>The parent area, purchase options and privacy screen sit behind a parent gate: a multiplication
-question written out in words, answered by tapping one of six numbers. A young child cannot pass it,
+question such as “8 × 9”, answered by tapping one of six numbers. A young child cannot pass it,
 and Nimbo never asks for a password, a fingerprint or your face.</p>
 <p>The parent area holds a screen-time limit, per-module content controls, progress statistics, PDF
 reports generated on the device, reminders that arrive switched off, and a backup that writes all the
@@ -865,7 +866,7 @@ gezebilir.</p>
     <li><span class="tick">✓</span><div><strong>Takip yok</strong><span class="sub">Analitik profili, davranışsal izleme, üçüncü taraf takip pikseli veya reklam kimliği kullanılmaz.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Veriler cihazda</strong><span class="sub">İlerleme, ekran süresi, çizimler, ayarlar ve ebeveyn raporları yalnızca cihazda tutulur.</span></div></li>
     <li><span class="tick">✓</span><div><strong>İnternet gerekmez</strong><span class="sub">Etkinliklerin tamamı çevrimdışı çalışır.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>Abonelik yok</strong><span class="sub">{FREE_ACTIVITIES} etkinlik ücretsizdir; tam erişim tek seferlik bir satın almadır ve öncesinde 3 gün denenebilir.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>Abonelik zorunlu değil</strong><span class="sub">{FREE_ACTIVITIES} etkinlik ücretsizdir; tam erişim tek seferlik de alınabilir, yıllık abonelik 3 gün ücretsiz başlar.</span></div></li>
   </ul>
 </div>
 
@@ -893,7 +894,7 @@ can explore alone.</p>
     <li><span class="tick">✓</span><div><strong>No tracking</strong><span class="sub">No analytics profile, no behavioural tracking, no third-party pixel, no advertising identifier.</span></div></li>
     <li><span class="tick">✓</span><div><strong>Data stays on the device</strong><span class="sub">Progress, screen time, drawings, settings and parent reports never leave it.</span></div></li>
     <li><span class="tick">✓</span><div><strong>No internet needed</strong><span class="sub">Every activity works offline.</span></div></li>
-    <li><span class="tick">✓</span><div><strong>No subscription</strong><span class="sub">{FREE_ACTIVITIES} activities are free; full access is a one-time purchase, and can be tried for 3 days first.</span></div></li>
+    <li><span class="tick">✓</span><div><strong>No subscription required</strong><span class="sub">{FREE_ACTIVITIES} activities are free; full access can also be bought once, and the yearly plan starts with 3 days free.</span></div></li>
   </ul>
 </div>
 

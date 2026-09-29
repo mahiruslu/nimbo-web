@@ -39,8 +39,8 @@ app is written down, so the landing, download and support pages cannot disagree:
 
 - `APP_VERSION` — the version a visitor can actually download. It moves with the
   store release, **not** with the app repo, and it moves together with
-  `latestVersion` in `config/app-config.json`. It is currently **1.8.0**.
-- `ACTIVITIES` / `FREE_ACTIVITIES` — 503 and 165. Recount them from the content
+  `latestVersion` in `config/app-config.json`. It is currently **1.10.0**.
+- `ACTIVITIES` / `FREE_ACTIVITIES` — 590 and 185. Recount them from the content
   packs rather than from memory:
 
 ```bash
@@ -58,8 +58,8 @@ console.log('TOTAL', total, 'FREE', free);
 ```
 
 - `STORIES` — the bedtime stories in the Sleep Room, stated on both landing
-  pages. It is 14; the rest of that sentence (4 breathing exercises, 6
-  soundscapes, 1 routine) has not moved yet. Recount it the same way:
+  pages. It is 17; the rest of that sentence (6 breathing exercises, 6
+  soundscapes, 1 routine) is `BREATHING` and prose. Recount it the same way:
 
 ```bash
 cd ../nimbo && npx tsx -e "
@@ -103,8 +103,8 @@ console.log(isRemoteAppConfig(raw) ? 'PASS' : 'FAIL');
 Two rules that are easy to get wrong:
 
 - **`version` must increase.** The app ignores a payload whose `version` is
-  lower than the copy it already cached. It is at **9**, tracking the app's
-  minor version (1.**8**.0 — 8 was 1.7.0's force-update bump) so the two stay
+  lower than the copy it already cached. It is at **11**, tracking the app's
+  minor version (1.**10**.0 — 9 was 1.8.0's, 10 was 1.9.0's) so the two stay
   readable side by side; the counter only has to grow, so skipping numbers is
   free.
 - **`storeUrl` must be an HTTPS URL on `apps.apple.com` or `play.google.com`.**
@@ -116,7 +116,7 @@ read too, since 1.8.0: the parent area shows the installed version and offers th
 optional update when the store has a newer one — nothing is ever shown to the
 child for it. **Raising `minVersion` locks every older install out until it
 updates** — only do it deliberately, and never above a version that is actually
-live in both stores. It is at **1.8.0**, which both stores approved.
+live in both stores. It stays at **1.8.0**: 1.9.0 and 1.10.0 are optional updates, and nothing forces an install to move.
 
 The optional `events` key schedules the seasonal world events. It is absent
 here on purpose: the payload can only pick *when* an event runs, never invent
