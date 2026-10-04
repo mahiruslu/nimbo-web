@@ -103,8 +103,8 @@ console.log(isRemoteAppConfig(raw) ? 'PASS' : 'FAIL');
 Two rules that are easy to get wrong:
 
 - **`version` must increase.** The app ignores a payload whose `version` is
-  lower than the copy it already cached. It is at **11**, tracking the app's
-  minor version (1.**10**.0 — 9 was 1.8.0's, 10 was 1.9.0's) so the two stay
+  lower than the copy it already cached. It is at **12**, tracking the app's
+  minor version (1.**11**.0 — 9 was 1.8.0's, 10 was 1.9.0's, 11 was 1.10.0's) so the two stay
   readable side by side; the counter only has to grow, so skipping numbers is
   free.
 - **`storeUrl` must be an HTTPS URL on `apps.apple.com` or `play.google.com`.**
@@ -117,6 +117,12 @@ optional update when the store has a newer one — nothing is ever shown to the
 child for it. **Raising `minVersion` locks every older install out until it
 updates** — only do it deliberately, and never above a version that is actually
 live in both stores. It stays at **1.8.0**: 1.9.0 and 1.10.0 are optional updates, and nothing forces an install to move.
+
+`features.schoolReady` and `features.creativeStudio` (and `school-1`, `nature-1`
+in `enabledPacks`) switch on Okula Hazırlık and the Yaratıcı Atölye. Both flags
+are optional in the validator — a missing flag means off — so 1.10.0 and older
+ignore them and the extra pack ids; the modules appear only in builds that carry
+them (1.11.0 on).
 
 The optional `events` key schedules the seasonal world events. It is absent
 here on purpose: the payload can only pick *when* an event runs, never invent
