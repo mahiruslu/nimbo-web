@@ -1,5 +1,5 @@
 {
-  "version": 11,
+  "version": 12,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -42,7 +42,9 @@
     "attentionPark": true,
     "robotWorkshop": true,
     "sleepRoom": true,
-    "paywall": true
+    "paywall": true,
+    "schoolReady": true,
+    "creativeStudio": true
   },
   "monetization": {
     "fullUnlockProductId": "nimbo_liftime",
@@ -50,6 +52,6 @@
   },
   "content": {
     "minContentVersion": 1,
-    "enabledPacks": ["math-1", "turkish-1", "attention-1", "art-1", "robot-1", "sleep-1"]
+    "enabledPacks": ["math-1", "turkish-1", "attention-1", "art-1", "robot-1", "sleep-1", "school-1", "nature-1"]
   }
 }
