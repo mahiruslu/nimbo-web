@@ -1,5 +1,5 @@
 {
-  "version": 12,
+  "version": 13,
   "maintenance": {
     "enabled": false,
     "message": {
@@ -52,6 +52,6 @@
   },
   "content": {
     "minContentVersion": 1,
-    "enabledPacks": ["math-1", "turkish-1", "attention-1", "art-1", "robot-1", "sleep-1", "school-1", "nature-1"]
+    "enabledPacks": ["math-1", "turkish-1", "attention-1", "art-1", "robot-1", "sleep-1", "school-1", "nature-1", "feelings-1"]
   }
 }

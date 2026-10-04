@@ -103,10 +103,10 @@ console.log(isRemoteAppConfig(raw) ? 'PASS' : 'FAIL');
 Two rules that are easy to get wrong:
 
 - **`version` must increase.** The app ignores a payload whose `version` is
-  lower than the copy it already cached. It is at **12**, tracking the app's
-  minor version (1.**11**.0 — 9 was 1.8.0's, 10 was 1.9.0's, 11 was 1.10.0's) so the two stay
-  readable side by side; the counter only has to grow, so skipping numbers is
-  free.
+  lower than the copy it already cached. It is at **13**. It used to track the app's
+  minor version (9 was 1.8.0's, 10 was 1.9.0's, 11 was 1.10.0's, 12 the first
+  1.11.0 modules); from 13 it also moves when a workshop is switched on before a
+  release. The counter only has to grow, so skipping numbers is free.
 - **`storeUrl` must be an HTTPS URL on `apps.apple.com` or `play.google.com`.**
   Anything else — including an empty string — fails validation for the whole
   document, not just that field.
@@ -118,8 +118,9 @@ child for it. **Raising `minVersion` locks every older install out until it
 updates** — only do it deliberately, and never above a version that is actually
 live in both stores. It stays at **1.8.0**: 1.9.0 and 1.10.0 are optional updates, and nothing forces an install to move.
 
-`features.schoolReady` and `features.creativeStudio` (and `school-1`, `nature-1`
-in `enabledPacks`) switch on Okula Hazırlık and the Yaratıcı Atölye. Both flags
+`features.schoolReady` and `features.creativeStudio` (and `school-1`, `nature-1`,
+`feelings-1` in `enabledPacks`) switch on Okula Hazırlık and the Yaratıcı Atölye's
+workshops (Doğa & Bilim, Duygular & Sosyal — version 13 added the second). Both flags
 are optional in the validator — a missing flag means off — so 1.10.0 and older
 ignore them and the extra pack ids; the modules appear only in builds that carry
 them (1.11.0 on).
