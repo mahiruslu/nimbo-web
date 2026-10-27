@@ -1,4 +1,4 @@
-# nimboapp.vercel.app
+# nimbo.mahiruslu.com
 
 The public site for the Nimbo kids app: legal documents, support, and the app's
 remote configuration endpoint.
@@ -147,12 +147,21 @@ Hosted on Vercel as its own project (`nimbo-web`, team `mahiruslus-projects`),
 separate from the `mahiruslu.me` portfolio. The GitHub repo is connected, so a
 push to `main` deploys.
 
-The live address is **https://nimboapp.vercel.app** — a Vercel-assigned domain,
-chosen over a custom subdomain to avoid a DNS record. That means deployment
-protection must stay **off**: Vercel Authentication only exempts *custom*
-domains, so with it on, a `.vercel.app` address returns a login redirect to
-everyone, including the app fetching its config and App Review reading the
-privacy policy.
+The site lives at **https://nimbo.mahiruslu.com**: a CNAME `nimbo` →
+`54c585302a213047.vercel-dns-017.com` in the `mahiruslu.com` DNS (managed in
+Squarespace). Both it and the original **https://nimboapp.vercel.app** serve
+this project, and the old address must stay up and must **not** redirect:
+
+- Every shipped build fetches `nimboapp.vercel.app/config/app-config.json`
+  (`NIMBO_CONFIG_ORIGIN` in the app), and the privacy policy and App Review
+  answers name that host. The app's only network host deliberately did not
+  move; only the pages did (`ORIGIN` here, `NIMBO_WEB_ORIGIN` in the app).
+- Builds up to 1.10.0 and store listings submitted before the move open the
+  legal pages on the old address.
+
+Deployment protection must stay **off**: Vercel Authentication only exempts
+*custom* domains, so with it on, the `.vercel.app` address returns a login
+redirect to everyone, including the app fetching its config.
 
     Vercel → nimbo-web → Settings → Deployment Protection
       → Vercel Authentication → Disabled
@@ -162,29 +171,9 @@ Nothing here is secret, so public preview deployments are fine.
 Verify:
 
 ```bash
-curl -sI https://nimboapp.vercel.app/gizlilik | head -1
+curl -sI https://nimbo.mahiruslu.com/gizlilik | head -1
 curl -s  https://nimboapp.vercel.app/config/app-config.json | head -c 80
 ```
-
-### If you later want nimbo.mahiruslu.com
-
-`nimbo.mahiruslu.com` is already added to this Vercel project and ownership is
-verified; only DNS is missing. In Google Cloud DNS, in the `mahiruslu.com`
-zone:
-
-```
-Name: nimbo   Type: CNAME   TTL: 300
-Data: 54c585302a213047.vercel-dns-017.com.
-```
-
-That target is issued by Vercel for this project — prefer it over the generic
-`cname.vercel-dns.com`.
-
-**But note this is not free to switch to.** `NIMBO_WEB_ORIGIN` in the app
-(`src/core/links/nimboLinks.ts`) is compiled into the binary, so moving the
-config endpoint means shipping an app update and keeping the old address alive
-until every install has taken it. Redirecting `nimboapp.vercel.app` would not
-be enough on its own — treat the move as a release, not a DNS change.
 
 ## Support mailbox
 

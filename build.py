@@ -14,7 +14,11 @@ import os
 
 OWNER = "Mahir Uslu"
 EMAIL = "nimbo@mahiruslu.com"
-ORIGIN = "https://nimboapp.vercel.app"
+ORIGIN = "https://nimbo.mahiruslu.com"
+# The host the app fetches its remote config from (NIMBO_CONFIG_ORIGIN in the
+# app). The privacy policy names it, so it is the address the shipped build
+# really contacts, not the site's: both serve this same Vercel project.
+CONFIG_ORIGIN = "https://nimboapp.vercel.app"
 
 # The store addresses, in the storefront-neutral form: no locale segment and no
 # name slug, so a visitor lands in their own country's store and a rename of the
@@ -182,7 +186,7 @@ adı yer almaz, çünkü Nimbo çocuğun adını hiç bilmez.</p>
 <h2>3. Ağ trafiği</h2>
 <p>Nimbo çevrimdışı çalışır. Uygulamanın kendi başlattığı tek ağ isteği şudur:</p>
 <ul>
-  <li>Her açılışta <code>{ORIGIN}/config/app-config.json</code> adresine <strong>anonim bir GET</strong>
+  <li>Her açılışta <code>{CONFIG_ORIGIN}/config/app-config.json</code> adresine <strong>anonim bir GET</strong>
   isteği. Bu istek yalnızca yapılandırma dosyasını indirir; gövde, başlık veya sorgu parametresi ile
   <strong>hiçbir bilgi göndermez</strong>. Cihaz kimliği, kullanıcı kimliği veya kullanım verisi taşımaz.</li>
 </ul>
@@ -325,7 +329,7 @@ contains no child's name, because Nimbo never knows it.</p>
 <h2>3. Network traffic</h2>
 <p>Nimbo works offline. The only network request the app makes on its own is:</p>
 <ul>
-  <li>An <strong>anonymous GET</strong> to <code>{ORIGIN}/config/app-config.json</code> at each
+  <li>An <strong>anonymous GET</strong> to <code>{CONFIG_ORIGIN}/config/app-config.json</code> at each
   launch. The request only downloads the configuration file; it <strong>sends no information</strong>
   in a body, header or query parameter. It carries no device identifier, user identifier or usage data.</li>
 </ul>
