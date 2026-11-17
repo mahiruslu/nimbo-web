@@ -57,8 +57,11 @@ STORIES = 17
 # as if they had been reissued too.
 UPDATED = {"tr": "29 Eylül 2026", "en": "29 September 2026"}
 TERMS_VERSION = "1.3"
-PRIVACY_UPDATED = {"tr": "21 Eylül 2026", "en": "21 September 2026"}
-PRIVACY_VERSION = "1.3"
+PRIVACY_UPDATED = {"tr": "17 Kasım 2026", "en": "17 November 2026"}
+PRIVACY_VERSION = "1.4"
+# The Nimbo World YouTube channel. Linked from the footer and the landing
+# documents table; the privacy policy explains how videos reach it.
+YOUTUBE = "https://www.youtube.com/@nimboworldkids"
 HOST = ORIGIN.split("://", 1)[1]
 
 # path -> its counterpart in the other language
@@ -70,8 +73,8 @@ ALT = {
     "/indir": "/get", "/get": "/indir",
 }
 FOOTER = {
-    "tr": [("/indir", "İndir"), ("/gizlilik", "Gizlilik"), ("/kullanim-kosullari", "Koşullar"), ("/destek", "Destek")],
-    "en": [("/get", "Download"), ("/privacy", "Privacy"), ("/terms", "Terms"), ("/support", "Support")],
+    "tr": [("/indir", "İndir"), ("/gizlilik", "Gizlilik"), ("/kullanim-kosullari", "Koşullar"), ("/destek", "Destek"), (YOUTUBE, "YouTube")],
+    "en": [("/get", "Download"), ("/privacy", "Privacy"), ("/terms", "Terms"), ("/support", "Support"), (YOUTUBE, "YouTube")],
 }
 
 
@@ -269,11 +272,30 @@ kaydettiğiniz yerde kalır; onları silmek size aittir.</p>
 Alanı → Satın Alımlar bölümünden <strong>Satın Alımları Geri Yükle</strong> ile tam erişimi geri
 kazanabilirsiniz.</p>
 
-<h2>9. Bu politikadaki değişiklikler</h2>
+<h2>9. YouTube kanalımız ve YouTube API Hizmetleri</h2>
+<p>Bu bölüm uygulamayla değil, <a href="{YOUTUBE}" rel="noopener">Nimbo World YouTube kanalımızla</a>
+ilgilidir. Uygulamanın kendisi YouTube'a bağlanmaz ve YouTube'dan veri almaz.</p>
+<ul>
+  <li>Kanaldaki videoları, yalnızca bizim kullandığımız bir iç araçla
+  <strong>YouTube API Hizmetleri</strong> üzerinden yükleyip zamanlarız. Araç yalnızca kendi kanalımıza
+  erişir; başka bir kişinin hesabına veya verisine erişmez.</li>
+  <li>Araç izleyicilerle ilgili hiçbir veri toplamaz. Sakladığımız tek bilgi, yüklediğimiz kendi
+  videolarımızın kimlik numaralarıdır. Kanal erişim izni (OAuth yenileme anahtarı) yalnızca bizim
+  bilgisayarımızda, şifreli diskte tutulur ve kimseyle paylaşılmaz.</li>
+  <li>Videolarımızı YouTube'da izlediğinizde
+  <a href="https://www.youtube.com/t/terms" rel="noopener">YouTube Hizmet Şartları</a> ve
+  <a href="https://policies.google.com/privacy" rel="noopener">Google Gizlilik Politikası</a> geçerlidir.</li>
+  <li>Araca verilen erişim, kanal sahibi tarafından
+  <a href="https://security.google.com/settings/security/permissions" rel="noopener">Google güvenlik ayarları</a>
+  sayfasından istenildiği an geri alınabilir. Erişim geri alındığında yerel anahtar silinir;
+  YouTube'dan alınıp saklanan başka bir veri olmadığı için silinecek başka kayıt kalmaz.</li>
+</ul>
+
+<h2>10. Bu politikadaki değişiklikler</h2>
 <p>Politika değişirse bu sayfadaki tarih ve sürüm numarası güncellenir. Uygulamanın veri
 davranışını değiştiren bir güncelleme yapılırsa, değişiklik uygulama sürüm notlarında da belirtilir.</p>
 
-<h2>10. İletişim</h2>
+<h2>11. İletişim</h2>
 <p>Veri sorumlusu: <strong>{OWNER}</strong> (Türkiye)</p>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p>Gizlilikle ilgili sorularınıza en geç 30 gün içinde yanıt verilir.</p>'''
@@ -408,11 +430,30 @@ file or PDF report you exported earlier stays wherever you saved it — deleting
 <p>Your purchase is tied to your store account. If you delete and reinstall the app, you can recover
 full access from Parent Area → Purchases with <strong>Restore Purchases</strong>.</p>
 
-<h2>9. Changes to this policy</h2>
+<h2>9. Our YouTube channel and YouTube API Services</h2>
+<p>This section is about our <a href="{YOUTUBE}" rel="noopener">Nimbo World YouTube channel</a>, not the
+app. The app itself never connects to YouTube and receives no data from it.</p>
+<ul>
+  <li>We upload and schedule the channel's videos with an internal tool, used only by us, that relies on
+  <strong>YouTube API Services</strong>. The tool accesses only our own channel; it never accesses
+  anyone else's account or data.</li>
+  <li>The tool collects no data about viewers. The only information we keep is the ID of each video we
+  uploaded ourselves. The channel's access permission (an OAuth refresh token) is kept only on our own
+  computer, on an encrypted disk, and is never shared.</li>
+  <li>When you watch our videos on YouTube, the
+  <a href="https://www.youtube.com/t/terms" rel="noopener">YouTube Terms of Service</a> and the
+  <a href="https://policies.google.com/privacy" rel="noopener">Google Privacy Policy</a> apply.</li>
+  <li>The channel owner can revoke the tool's access at any time from the
+  <a href="https://security.google.com/settings/security/permissions" rel="noopener">Google security settings</a>
+  page. When access is revoked the local token is deleted; since nothing else from YouTube is stored,
+  no other record remains to delete.</li>
+</ul>
+
+<h2>10. Changes to this policy</h2>
 <p>If this policy changes, the date and version number on this page are updated. If an update changes
 the app's data behaviour, the change is also noted in the app's release notes.</p>
 
-<h2>10. Contact</h2>
+<h2>11. Contact</h2>
 <p>Data controller: <strong>{OWNER}</strong> (Türkiye)</p>
 <p class="contact"><a href="mailto:{EMAIL}">{EMAIL}</a></p>
 <p>Privacy questions are answered within 30 days at the latest.</p>'''
@@ -783,6 +824,7 @@ yedekleme bulunur.</p>
   <tr><td>Gizlilik Politikası</td><td><a href="/gizlilik">{HOST}/gizlilik</a></td></tr>
   <tr><td>Kullanım Koşulları</td><td><a href="/kullanim-kosullari">{HOST}/kullanim-kosullari</a></td></tr>
   <tr><td>Destek</td><td><a href="/destek">{HOST}/destek</a></td></tr>
+  <tr><td>YouTube kanalı</td><td><a href="{YOUTUBE}" rel="noopener">youtube.com/@nimboworldkids</a></td></tr>
 </table></div>
 
 <p class="contact">İletişim: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
@@ -837,6 +879,7 @@ progress into one file.</p>
   <tr><td>Privacy Policy</td><td><a href="/privacy">{HOST}/privacy</a></td></tr>
   <tr><td>Terms of Use</td><td><a href="/terms">{HOST}/terms</a></td></tr>
   <tr><td>Support</td><td><a href="/support">{HOST}/support</a></td></tr>
+  <tr><td>YouTube channel</td><td><a href="{YOUTUBE}" rel="noopener">youtube.com/@nimboworldkids</a></td></tr>
 </table></div>
 
 <p class="contact">Contact: <a href="mailto:{EMAIL}">{EMAIL}</a></p>'''
